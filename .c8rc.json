@@ -1,0 +1,15 @@
+{
+  "include": [
+    "packages/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "extensions": [
+    "ts"
+  ],
+  "reporter": [
+    "text",
+    "html"
+  ]
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--suppress NsUnresolvedStyleClassReference -->
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  <meta charset='UTF-8'>
+
+  <meta content='og' property='og:title'>
+  <meta content='https://og.com' property='og:url'>
+
+  <meta content='meta' name='author'>
+
+  <meta content='https://meta.com' property='article:author'>
+  <link href='https://rel1.com' rel='author'>
+
+  <meta content='twitter' property='twitter:title'>
+  <meta content='https://twitter.com' property='twitter:url'>
+
+  <meta content='twitter-name' name='twitter:title'>
+  <meta content='https://twitter-name.com' name='twitter:url'>
+
+  <link href='https://canonical.com' rel='canonical'>
+  <link href='https://alternate.com' rel='alternate'>
+
+  <title>title-tag</title>
+
+  <script type='application/ld+json'>
+    {
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "headline": "jsonld",
+          "url": "https://jsonld.com",
+          "author": {
+            "name": "jsonld",
+            "url": "https://jsonld.com"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+<h1 class='title'>class-title</h1>
+<h1 class='title'><a href='https://a-title.com'>a-title</a></h1>
+<h3 class='entry-title'><a href='https://entry-title.com'>entry-title</a></h3>
+<h3 class='post-title'><a href='https://post-title.com'>post-title</a></h3>
+
+<a href='https://itemprop.com' itemprop='author'>itemprop</a>
+<a href='https://rel2.com' rel='author'>rel2</a>
+<a class='author' href='https://aclass.com'>a class</a>
+<a href='https://href.com/author/'>href</a>
+<h5 class='author'><a href='https://classa.com'>class a</a></h5>
+<h5 class='author'>class</h5>
+<h5 itemprop='author'>
+  <span itemprop='name'>itemprop name</span>
+  <a href='https://itemprop-url.com' itemprop='url'></a>
+</h5>
+</body>
+</html>

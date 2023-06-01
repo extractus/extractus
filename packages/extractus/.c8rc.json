@@ -1,0 +1,18 @@
+{
+  "src": [
+    "src"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "extensions": [
+    "ts"
+  ],
+  "reporter": [
+    "text",
+    "html"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@extractus/attribute-selector",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "ava",
+    "test:coverage": "c8 ava"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@extractus/utils": "link:..\\utils"
+  }
+}

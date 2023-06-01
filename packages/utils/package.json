@@ -1,0 +1,33 @@
+{
+  "name": "@extractus/utils",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "ava",
+    "test:coverage": "c8 ava"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@jridgewell/resolve-uri": "^3.1.1",
+    "@minify-html/wasm": "^0.11.1",
+    "@stdlib/assert-is-digit-string": "^0.0.9",
+    "extra-utils": "^5.2.0",
+    "fastest-levenshtein": "^1.0.16",
+    "is-chinese": "^2.0.0",
+    "iterable-operator": "^4.0.6",
+    "linkedom": "^0.14.26",
+    "micro-memoize": "^4.1.2",
+    "mpath": "https://github.com/mongoosejs/mpath",
+    "normalize-url": "^8.0.0",
+    "sanitize-html": "^2.10.0",
+    "type-fest": "^3.10.0",
+    "urlpattern-polyfill": "^8.0.2"
+  },
+  "devDependencies": {
+    "@types/sanitize-html": "^2.9.0"
+  }
+}

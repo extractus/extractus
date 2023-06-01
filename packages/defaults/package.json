@@ -1,0 +1,26 @@
+{
+  "name": "@extractus/defaults",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "ava",
+    "test:coverage": "c8 ava"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@extractus/extractus": "link:..\\extractus",
+    "@extractus/opengraph": "link:..\\opengraph",
+    "@extractus/schema-org-jsonld": "link:..\\schema-org-jsonld",
+    "@extractus/utils": "link:..\\utils",
+    "@stdlib/assert-is-uri": "^0.0.8",
+    "condense-whitespace": "^3.0.0",
+    "extra-utils": "^5.2.0",
+    "is-absolute-url": "^4.0.1",
+    "iterable-operator": "^4.0.6",
+    "type-fest": "^3.10.0"
+  }
+}
