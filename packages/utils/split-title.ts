@@ -9,12 +9,13 @@ export default memoize(
     const separatorIndex = SEPARATORS.map((it) => title.lastIndexOf(it)).find(
       (it) => it !== -1
     )
-    if (separatorIndex !== undefined) {
+    if (separatorIndex === undefined) {
+      yield title
+    } else {
       yield title.slice(0, separatorIndex)
       yield title.slice(separatorIndex + 3)
       yield title
     }
-    yield title
   },
   { maxSize: 8 }
 )

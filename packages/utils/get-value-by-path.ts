@@ -5,6 +5,7 @@ import type { Get } from 'type-fest'
 import type { ParseNumber } from './parse-number.js'
 import type { Optional } from './optional.js'
 import { isArray, isntArray } from 'extra-utils'
+import memoize from './memoize.js'
 
 type Path = string | Array<string | number>
 
@@ -93,5 +94,4 @@ export function getValueByPath<T>(
   return getValueByPath<T>(nextTarget, parts.slice(1), ignored)
 }
 
-// @ts-expect-error The type is wrong
 export default memoize(getValueByPath)
