@@ -1,14 +1,11 @@
 import type { Extractor, Extractors, Processed } from './index.js'
 import { map, reduce, toArray } from 'iterable-operator'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import { deepMerge } from '@extractus/utils/deep-merge.js'
 import { isObject, pipe } from 'extra-utils'
 import { DEBUG } from './logger.js'
+import { deepMerge } from '@extractus/utils/deep-merge.js'
 
-export default <T extends Extractors>(
-    extractors: Iterable<T>,
-    context: ExtractContext
-  ) =>
+export default <T extends Extractors>(extractors: Iterable<T>, context: ExtractContext) =>
   (input: string) =>
     pipe(
       input,

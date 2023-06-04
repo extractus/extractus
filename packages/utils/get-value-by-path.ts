@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/default
 import mpath from 'mpath'
 import isDigitString from '@stdlib/assert-is-digit-string'
 import type { Get } from 'type-fest'
