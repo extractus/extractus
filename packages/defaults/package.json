@@ -15,6 +15,7 @@
     "@extractus/extractus": "link:..\\extractus",
     "@extractus/opengraph": "link:..\\opengraph",
     "@extractus/schema-org-jsonld": "link:..\\schema-org-jsonld",
+    "@extractus/twitter-card": "link:..\\twitter-card",
     "@extractus/utils": "link:..\\utils",
     "@stdlib/assert-is-uri": "^0.0.8",
     "condense-whitespace": "^3.0.0",

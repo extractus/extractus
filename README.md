@@ -56,3 +56,6 @@ Using [pnpm](https://pnpm.io) for manage workspace
 - Clone repo
 - Open project in terminal or IDE
 - Run `pnpm i` at the root of project
+
+## Roadmap
+https://github.com/orgs/extractus/projects/2/views/1

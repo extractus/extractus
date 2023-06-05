@@ -83,6 +83,9 @@ importers:
       '@extractus/schema-org-jsonld':
         specifier: link:..\schema-org-jsonld
         version: link:../schema-org-jsonld
+      '@extractus/twitter-card':
+        specifier: link:..\twitter-card
+        version: link:../twitter-card
       '@extractus/utils':
         specifier: link:..\utils
         version: link:../utils
@@ -162,6 +165,15 @@ importers:
       iterable-operator:
         specifier: ^4.0.6
         version: 4.0.6
+
+  packages/twitter-card:
+    dependencies:
+      '@extractus/extractus':
+        specifier: link:..\extractus
+        version: link:../extractus
+      '@extractus/utils':
+        specifier: link:..\utils
+        version: link:../utils
 
   packages/utils:
     dependencies:
