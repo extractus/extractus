@@ -5,26 +5,23 @@ import objectInspect from 'object-inspect'
 
 export const DEBUG = Boolean(process?.env && process.env['DEBUG'])
 
-if (DEBUG) {
-  const colors = {
-    TRACE: chalk.magenta,
-    DEBUG: chalk.cyan,
-    INFO: chalk.blue,
-    WARN: chalk.yellow,
-    ERROR: chalk.red
-  }
-  logPrefix.reg(log)
-  log.enableAll()
-
-  logPrefix.apply(log, {
-    format(level, _, timestamp) {
-      return `${chalk.gray(`[${timestamp}]`)} ${colors[
-        <keyof typeof colors>level.toUpperCase()
-      ](level)}`
-    }
-  })
-  log.setLevel('debug')
+const colors = {
+  TRACE: chalk.magenta,
+  DEBUG: chalk.cyan,
+  INFO: chalk.blue,
+  WARN: chalk.yellow,
+  ERROR: chalk.red
 }
+logPrefix.reg(log)
+log.enableAll()
+
+logPrefix.apply(log, {
+  format(level, _, timestamp) {
+    return `${chalk.gray(`[${timestamp}]`)} ${colors[<keyof typeof colors>level.toUpperCase()](level)}`
+  }
+})
+
+if (DEBUG) log.setLevel('debug')
 
 let inspectExist = false
 try {

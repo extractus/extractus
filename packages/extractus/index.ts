@@ -74,7 +74,7 @@ export function extract<Selected = any>(
                 (accumulator, [subKey, subValue]) => {
                   const filtered = filter<string>(subValue, it => !!it)
                   accumulator[subKey] = filtered
-                  if (DEBUG && filtered) accumulator[subKey] = toArray(filtered)
+                  if (DEBUG) accumulator[subKey] = toArray(filtered)
                   return accumulator
                 },
                 <Record<string, Iterable<string>>>{}
@@ -84,7 +84,7 @@ export function extract<Selected = any>(
 
             const filtered = filter<string>(value, it => !!it)
             accumulator[key] = filtered
-            if (DEBUG && filtered) accumulator[key] = toArray(filtered)
+            if (DEBUG) accumulator[key] = toArray(filtered)
             return accumulator
           },
           <NestableRecord<Iterable<string>>>{}

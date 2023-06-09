@@ -1,21 +1,12 @@
 import type { Processed, Selector, Selectors } from './index.js'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import {
-  count,
-  first,
-  isIterable,
-  isntIterable,
-  reduce
-} from 'iterable-operator'
+import { first, isIterable, isntIterable, reduce } from 'iterable-operator'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
 import { pipe } from 'extra-utils'
 
 const defaultSelector = (input: Iterable<string>) => <string>first(input)
 
-export default function <T>(
-  selectors: Selectors<T | string>,
-  context: ExtractContext
-) {
+export default function <T>(selectors: Selectors<T | string>, context: ExtractContext) {
   return (input: NestableRecord<Iterable<string>>) =>
     pipe(Object.entries(input), (entries) =>
       reduce(
@@ -24,30 +15,28 @@ export default function <T>(
           const select = selectors[key] ?? defaultSelector
           if (isntIterable(values)) {
             const invalidSelector = typeof select !== 'object'
-            accumulator[key] = reduce(
+            const result = reduce(
               Object.entries(values),
               (accumulator, [subKey, subValues]) => {
-                if (!count(subValues)) return accumulator
-                if (invalidSelector) {
-                  accumulator[subKey] = defaultSelector(subValues)
-                  return accumulator
-                }
-                const subSelect = select[subKey] ?? defaultSelector
-                accumulator[subKey] = subSelect(subValues, context)
+                const subSelect = invalidSelector ? undefined : select[subKey]
+                const actualSelect = invalidSelector || !subSelect ? defaultSelector : subSelect
+                const result = actualSelect(subValues, context)
+                if (result) accumulator[subKey] = result
                 return accumulator
               },
               <Record<string, ReturnType<Selector<T | string>>>>{}
             )
+            if (Object.keys(result).length > 0) accumulator[key] = result
             return accumulator
           }
 
-          if (!count(values)) return accumulator
           if (typeof select !== 'object' && isIterable(values)) {
-            accumulator[key] = select(values, context)
+            const result = select(values, context)
+            if (result) accumulator[key] = result
             return accumulator
           }
-
-          accumulator[key] = defaultSelector(values)
+          const result = defaultSelector(values)
+          if (Object.keys(result).length > 0) accumulator[key] = result
           return accumulator
         },
         <Processed<Selector<T | string>>>{}
