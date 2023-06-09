@@ -35,6 +35,27 @@ test('should extract url', async (t) => {
   t.true(result.next().done)
 })
 
+test('should extract description', async (t) => {
+  const html = `
+      <html><head>
+        <script type='application/ld+json'>{
+          "articleBody": "articleBody",
+          "description": "description",
+          "headline": "headline",
+          "@graph": [{
+            "articleBody": "nested articleBody",
+            "description": "nested description",
+            "headline": "headline"
+          }]
+        }</script></head></html>`
+  const result = schemaOrgJsonld.description(html)
+  t.is(result.next().value, 'articleBody')
+  t.is(result.next().value, 'nested articleBody')
+  t.is(result.next().value, 'description')
+  t.is(result.next().value, 'nested description')
+  t.true(result.next().done)
+})
+
 test('should extract author name', async (t) => {
   const html = `
       <html><head>
@@ -78,5 +99,92 @@ test('should extract author url', async (t) => {
   const result = schemaOrgJsonld.author.url(html)
   t.is(result.next().value, 'https://url')
   t.is(result.next().value, 'https://nested-url')
+  t.true(result.next().done)
+})
+
+test('should extract image', async (t) => {
+  const html = `
+      <html><head>
+        <script type='application/ld+json'>{
+          "image": "https://image",,
+          "headline": "headline",
+          "@graph": [{
+            "image": "https://nested-image",
+            "headline": "headline"
+          }]
+        }</script></head></html>`
+  const result = schemaOrgJsonld.image(html)
+  t.is(result.next().value, 'https://image')
+  t.is(result.next().value, 'https://nested-image')
+  t.true(result.next().done)
+})
+
+test('should not extract image when it is not creative work', (t) => {
+  const html = `
+      <html><head>
+        <script type='application/ld+json'>{
+          "image": "https://image"
+        }</script></head></html>`
+  const result = schemaOrgJsonld.image(html)
+  t.is(result.next().value, undefined)
+  t.true(result.next().done)
+})
+
+test('should extract language', async (t) => {
+  const html = `
+      <html><head>
+        <script type='application/ld+json'>{
+          "inLanguage": "en",
+          "headline": "headline",
+          "@graph": [{
+            "inLanguage": "nested en",
+            "headline": "headline"
+          }]
+        }</script></head></html>`
+  const result = schemaOrgJsonld.language(html)
+  t.is(result.next().value, 'en')
+  t.is(result.next().value, 'nested en')
+  t.true(result.next().done)
+})
+
+test('should extract date published', async (t) => {
+  const html = `
+      <html><head>
+        <script type='application/ld+json'>{
+          "datePublished": "2020-01-01",
+          "dateCreated": "2020-01-02",
+          "headline": "headline",
+          "@graph": [{
+            "datePublished": "2020-01-03",
+            "dateCreated": "2020-01-04",
+            "headline": "headline"
+          }]
+        }</script></head></html>`
+  const result = schemaOrgJsonld.date.published(html)
+  t.is(result.next().value, '2020-01-01')
+  t.is(result.next().value, '2020-01-02')
+  t.is(result.next().value, '2020-01-03')
+  t.is(result.next().value, '2020-01-04')
+  t.true(result.next().done)
+})
+
+test('should extract date modified', async (t) => {
+  const html = `
+      <html><head>
+        <script type='application/ld+json'>{
+          "dateModified": "2020-01-01",
+          "uploadDate": "2020-01-02",
+          "headline": "headline",
+          "@graph": [{
+            "dateModified": "2020-01-03",
+            "uploadDate": "2020-01-04",
+            "headline": "headline"
+          }]
+        }</script></head></html>`
+  const result = schemaOrgJsonld.date.modified(html)
+  t.is(result.next().value, '2020-01-01')
+  t.is(result.next().value, '2020-01-02')
+  t.is(result.next().value, '2020-01-03')
+  t.is(result.next().value, '2020-01-04')
   t.true(result.next().done)
 })

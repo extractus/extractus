@@ -8,11 +8,6 @@ export default function* <T extends Record<string, unknown>>(
 ) {
   if (!input) return
   yield getValueByPath<string>(input, path, ignored)
-  for (const value of getValueByPath<string[]>(
-    input,
-    `@graph.${path}`,
-    ignored
-  ) ?? []) {
-    yield value
-  }
+  const result = getValueByPath<string[]>(input, `@graph.${path}`, ignored)
+  if (result) yield* result
 }
