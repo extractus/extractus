@@ -1,0 +1,19 @@
+{
+  "name": "@extractus/link-tag",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "ava",
+    "test:coverage": "c8 ava"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@extractus/extractus": "link:..\\extractus",
+    "@extractus/utils": "link:..\\utils",
+    "iterable-operator": "^4.0.6"
+  }
+}
