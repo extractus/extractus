@@ -9,7 +9,7 @@ const NOT_RATING = (it: unknown) =>
       typeof it === 'object' &&
       ['EndorsementRating', 'AggregateRating', 'Rating'].includes(<string>(<Record<string, unknown>>it)['@type'])
   )
-const IS_CREATIVE_WORK = (it: unknown) => Boolean(it && typeof it === 'object' && !('headline' in it))
+const IS_CREATIVE_WORK = (it: unknown) => Boolean(!it || typeof it !== 'object' || !('headline' in it))
 
 const extractJsonld = (input: string, path: string, ignored?: (it: unknown) => boolean) =>
   findValueFromJsonld(extractJsonldFromHtml(input), path, ignored)

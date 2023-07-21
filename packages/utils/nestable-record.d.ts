@@ -1,1 +1,1 @@
-export type NestableRecord<Type> = Record<string, Type | Record<string, Type>>
+export type NestableRecord<Type, Key extends string = string> = Record<Key, Type | Record<Key, Type>>

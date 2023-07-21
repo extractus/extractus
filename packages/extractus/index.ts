@@ -9,23 +9,21 @@ import type { ExtractContext } from '@extractus/utils/extract-context.js'
 import type { OptionalContextProcessor } from '@extractus/utils/optional-context-processor.js'
 import usingSelector from './using-selector.js'
 import selector from '@extractus/defaults/selector.js'
-import { filter, isntIterable, reduce, toArray } from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { debug, DEBUG } from './logger.js'
-
-export type Processed<T extends OptionalContextProcessor<any, any>> =
-  NestableRecord<ReturnType<T>>
+import type { SetNonNullable, Spread } from 'type-fest'
+import filterUndefined from './filter-undefined.js'
 
 export type Extractor = OptionalContextProcessor
 export type Extractors = NestableRecord<Extractor>
+export type ExtractorReturn = ReturnType<Extractor>
 
 export type Transformer = OptionalContextProcessor<Iterable<Optional<string>>>
 export type Transformers = NestableRecord<Transformer>
+export type TransformerReturn = ReturnType<Transformer>
 
-export type Selector<T> = OptionalContextProcessor<Iterable<string>, T | string>
-export type Selectors<T> = NestableRecord<Selector<T | string>>
-
-type SelectorResult<T> = T extends Selectors<infer R> ? R : never
+export type Selector<T> = OptionalContextProcessor<Iterable<string>, T>
+export type Selectors<T> = NestableRecord<Selector<T>>
 
 export interface ExtractOptions<Selected> {
   url?: string
@@ -40,22 +38,29 @@ export interface ExtractOptions<Selected> {
  * @param input HTML to extract content
  * @param options {@link ExtractOptions}
  */
-export function extract<Selected = any>(
-  input: string,
-  options: ExtractOptions<Selected> = {}
-) {
-  const actualSelector: Selectors<Selected | SelectorResult<typeof selector>> =
-    options.selector ?? selector
-  const actualOptions = {
+export function extract<Options extends ExtractOptions<unknown>>(input: string, options?: Options) {
+  const actualOptions = <
+    SetNonNullable<
+      Spread<
+        {
+          extractors: typeof extractors
+          transformer: typeof transformer
+          selector: typeof selector
+        },
+        Options
+      >,
+      'extractors' | 'transformer' | 'selector'
+    >
+  >{
     extractors,
     transformer,
-    selector: actualSelector,
+    selector,
     ...options
   }
   if (DEBUG) debug('options')(actualOptions)
   const context = {
-    url: options.url,
-    language: options.language
+    url: options?.url,
+    language: options?.language
   } satisfies ExtractContext
   return pipe(
     input,
@@ -63,33 +68,7 @@ export function extract<Selected = any>(
     debug('extracted'),
     usingTransformer(actualOptions.transformer, context),
     debug('transformed'),
-    (it: Processed<Transformer>) =>
-      pipe(Object.entries(it), (entries) =>
-        reduce(
-          entries,
-          (accumulator, [key, value]) => {
-            if (isntIterable(value)) {
-              accumulator[key] = reduce(
-                Object.entries(value),
-                (accumulator, [subKey, subValue]) => {
-                  const filtered = filter<string>(subValue, it => !!it)
-                  accumulator[subKey] = filtered
-                  if (DEBUG) accumulator[subKey] = toArray(filtered)
-                  return accumulator
-                },
-                <Record<string, Iterable<string>>>{}
-              )
-              return accumulator
-            }
-
-            const filtered = filter<string>(value, it => !!it)
-            accumulator[key] = filtered
-            if (DEBUG) accumulator[key] = toArray(filtered)
-            return accumulator
-          },
-          <NestableRecord<Iterable<string>>>{}
-        )
-      ),
+    filterUndefined,
     debug('filtered'),
     usingSelector(actualOptions.selector, context),
     debug('selected')
