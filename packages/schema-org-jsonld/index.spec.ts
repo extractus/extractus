@@ -106,7 +106,7 @@ test('should extract image', async (t) => {
   const html = `
       <html><head>
         <script type='application/ld+json'>{
-          "image": "https://image",,
+          "image": "https://image",
           "headline": "headline",
           "@graph": [{
             "image": "https://nested-image",
@@ -162,8 +162,8 @@ test('should extract date published', async (t) => {
         }</script></head></html>`
   const result = schemaOrgJsonld.date.published(html)
   t.is(result.next().value, '2020-01-01')
-  t.is(result.next().value, '2020-01-02')
   t.is(result.next().value, '2020-01-03')
+  t.is(result.next().value, '2020-01-02')
   t.is(result.next().value, '2020-01-04')
   t.true(result.next().done)
 })
@@ -183,8 +183,8 @@ test('should extract date modified', async (t) => {
         }</script></head></html>`
   const result = schemaOrgJsonld.date.modified(html)
   t.is(result.next().value, '2020-01-01')
-  t.is(result.next().value, '2020-01-02')
   t.is(result.next().value, '2020-01-03')
+  t.is(result.next().value, '2020-01-02')
   t.is(result.next().value, '2020-01-04')
   t.true(result.next().done)
 })
