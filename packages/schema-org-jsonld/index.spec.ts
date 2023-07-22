@@ -1,3 +1,5 @@
+// noinspection HtmlRequiredTitleElement,HtmlRequiredLangAttribute
+
 import test from 'ava'
 import schemaOrgJsonld from './index.js'
 

@@ -69,10 +69,16 @@ export default {
       const document = parseHtml(input)
       // Should from schema.org
       yield document.querySelector('[itemprop*="datepublished" i]')?.getAttribute('content')
-      yield document.querySelector('time[datetime][pubdate]')?.getAttribute('datetime')
-      yield document.querySelector('time[itemprop*="date" i][datetime]')?.getAttribute('datetime')
-      yield document.querySelector('time[datetime]')?.getAttribute('datetime')
-      yield document.querySelector('[itemprop*="date" i]')?.getAttribute('content')
+      yield* map(
+        flatMap(['time[datetime][pubdate]', 'time[itemprop*="date" i][datetime]', 'time[datetime]'], (it) =>
+          document.querySelectorAll(it)
+        ),
+        (it) => it?.getAttribute('datetime')
+      )
+      yield* map(
+        document.querySelectorAll('[itemprop*="date" i]'),
+        (it) => it?.getAttribute('content') ?? it?.getAttribute('datetime')
+      )
       yield* map(
         flatMap(
           [
@@ -80,7 +86,6 @@ export default {
             '[id*="post-timestamp" i]',
             '[class*="publish" i]',
             '[class*="post-timestamp" i]',
-            '[class*="byline" i]',
             '[class*="byline" i]',
             '[class*="dateline" i]',
             '[id*="metadata" i]',
