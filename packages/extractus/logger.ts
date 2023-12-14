@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import logPrefix from 'loglevel-plugin-prefix'
 import objectInspect from 'object-inspect'
 
-export const DEBUG = Boolean(process?.env && process.env['DEBUG'])
+export const DEBUG = Boolean(process?.env?.['DEBUG'])
 
 const colors = {
   TRACE: chalk.magenta,

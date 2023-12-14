@@ -6,23 +6,15 @@ import type { Extractors } from '@extractus/extractus'
  */
 export default {
   title: function* (input: string) {
-    yield parseHtml(input)
-      .querySelector('meta[property="twitter:title"]')
-      ?.getAttribute('content')
+    yield parseHtml(input).querySelector('meta[property="twitter:title"]')?.getAttribute('content')
   },
   url: function* (input: string) {
-    yield parseHtml(input)
-      .querySelector('meta[property="twitter:url"]')
-      ?.getAttribute('content')
+    yield parseHtml(input).querySelector('meta[property="twitter:url"]')?.getAttribute('content')
   },
   description: function* (input: string) {
-    yield parseHtml(input)
-      .querySelector('meta[property="twitter:description"]')
-      ?.getAttribute('content')
+    yield parseHtml(input).querySelector('meta[property="twitter:description"]')?.getAttribute('content')
   },
-  image:  function* (input: string) {
-    yield parseHtml(input)
-      .querySelector('meta[property="twitter:image"]')
-      ?.getAttribute('content')
+  image: function* (input: string) {
+    yield parseHtml(input).querySelector('meta[property="twitter:image"]')?.getAttribute('content')
   }
 } satisfies Extractors

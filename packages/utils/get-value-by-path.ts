@@ -21,10 +21,7 @@ function getPartsByPath(path: Path) {
     const length = path.length
     for (index = 0; index < length; ++index) {
       if (typeof path[index] !== 'string' && typeof path[index] !== 'number') {
-        throw new TypeError(
-          'Each segment of path to `set()` must be a string or number, got ' +
-            typeof path[index]
-        )
+        throw new TypeError('Each segment of path to `set()` must be a string or number, got ' + typeof path[index])
       }
     }
     return path
@@ -38,11 +35,7 @@ function getPartsByPath(path: Path) {
  * @param path The path split by dot(.). Read more at https://www.npmjs.com/package/mpath
  * @param ignored If any object on the path is ignored. Function will return undefined
  */
-export function getValueByPath(
-  target: undefined | null,
-  path: Path,
-  ignored?: (it: unknown) => boolean
-): undefined
+export function getValueByPath(target: undefined | null, path: Path, ignored?: (it: unknown) => boolean): undefined
 
 export function getValueByPath<T extends unknown[], P extends string>(
   target: T,
@@ -50,41 +43,24 @@ export function getValueByPath<T extends unknown[], P extends string>(
   ignored?: (it: unknown) => boolean
 ): T[ParseNumber<P>]
 
-export function getValueByPath<
-  T extends Record<PropertyKey, unknown>,
-  P extends string | string[]
->(target: T, path: P, ignored?: (it: unknown) => boolean): Get<T, P>
-
-export function getValueByPath<T>(
-  target: unknown,
-  path: Path,
+export function getValueByPath<T extends Record<PropertyKey, unknown>, P extends string | string[]>(
+  target: T,
+  path: P,
   ignored?: (it: unknown) => boolean
-): Optional<T>
+): Get<T, P>
 
-export function getValueByPath<T>(
-  target: unknown,
-  path: Path,
-  ignored?: (it: unknown) => boolean
-): Optional<T> {
-  if (
-    target === null ||
-    target === undefined ||
-    (isntArray(target) && ignored?.(target))
-  )
-    return
+export function getValueByPath<T>(target: unknown, path: Path, ignored?: (it: unknown) => boolean): Optional<T>
+
+export function getValueByPath<T>(target: unknown, path: Path, ignored?: (it: unknown) => boolean): Optional<T> {
+  if (target === null || target === undefined || (isntArray(target) && ignored?.(target))) return
   const parts = getPartsByPath(path)
   if (parts.length === 0) return target as T
-  if (
-    isArray(target) &&
-    !(isDigitString(parts[0]) || typeof parts[0] === 'number')
-  ) {
+  if (isArray(target) && !(isDigitString(parts[0]) || typeof parts[0] === 'number')) {
     const length = target.length
     const result = Array.from({ length })
     for (let index = 0; index < length; index++) {
       if (ignored?.(target[index])) continue
-      result[index] = target[index]
-        ? getValueByPath<T>(target[index], parts, ignored)
-        : undefined
+      result[index] = target[index] ? getValueByPath<T>(target[index], parts, ignored) : undefined
     }
     return <T>result
   }

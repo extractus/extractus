@@ -14,22 +14,17 @@ import { pipe } from 'extra-utils'
 /**
  * @package
  */
-export const notBlank = (values: Iterable<Optional<string>>) =>
-  <Iterable<string>>filter(values, isStringAndNotBlank)
+export const notBlank = (values: Iterable<Optional<string>>) => <Iterable<string>>filter(values, isStringAndNotBlank)
 
 /**
  * @package
  */
-export const condense = (values: Iterable<string>) =>
-  map(values, condenseWhitespace)
+export const condense = (values: Iterable<string>) => map(values, condenseWhitespace)
 
 /**
  * @package
  */
-export const processUrl = (
-  values: Iterable<Optional<string>>,
-  context?: ExtractContext
-) =>
+export const processUrl = (values: Iterable<Optional<string>>, context?: ExtractContext) =>
   map(values, (it) => {
     if (it) {
       const result = resolveUrl(it, context?.url)
@@ -42,8 +37,7 @@ export const processUrl = (
  * Transform the extracted strings.
  */
 export default {
-  title: (values: Iterable<Optional<string>>) =>
-    pipe(values, notBlank, condense, (it) => flatMap(it, splitTitle)),
+  title: (values: Iterable<Optional<string>>) => pipe(values, notBlank, condense, (it) => flatMap(it, splitTitle)),
   url: processUrl,
   author: {
     name: (values: Iterable<Optional<string>>) =>
@@ -52,8 +46,7 @@ export default {
   },
   image: processUrl,
   language: notBlank,
-  description: (values: Iterable<Optional<string>>) =>
-    pipe(values, notBlank, condense),
+  description: (values: Iterable<Optional<string>>) => pipe(values, notBlank, condense),
   date: {
     published: notBlank,
     modified: notBlank

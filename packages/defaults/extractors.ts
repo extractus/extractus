@@ -10,7 +10,7 @@ export const extractors = (<const>[
   await import('@extractus/twitter-card/index.js').then((it) => it.default),
   await import('@extractus/meta-tags/index.js').then((it) => it.default),
   await import('@extractus/link-tag/index.js').then((it) => it.default),
-  await import('@extractus/generic/index.js').then((it) => it.default),
+  await import('@extractus/generic/index.js').then((it) => it.default)
 ]) satisfies Iterable<Extractors>
 
 export type DefaultExtractors = DeepMerged<IterableElement<typeof extractors>>

@@ -11,13 +11,6 @@ export interface ParseHtmlOptions {
 
 export default memoize(
   (input: string, options?: ParseHtmlOptions) =>
-    <HTMLDocument>(
-      (<unknown>(
-        new DOMParser().parseFromString(
-          minifyHtml(input, options?.minify),
-          'text/html'
-        )
-      ))
-    ),
+    <HTMLDocument>(<unknown>new DOMParser().parseFromString(minifyHtml(input, options?.minify), 'text/html')),
   { maxSize: 2 }
 )

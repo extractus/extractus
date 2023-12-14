@@ -2,13 +2,10 @@ import isStringAndNotBlank from '@extractus/utils/is-string-and-not-blank.js'
 
 const _providers = <const>{
   text: <T extends HTMLElement>(element: T) => element.textContent,
-  attr: <T extends HTMLElement>(element: T, name: string) =>
-    element.getAttribute(name)
+  attr: <T extends HTMLElement>(element: T, name: string) => element.getAttribute(name)
 }
 
-const providers = <
-  Record<Attributes, (element: Element, name?: string) => string>
->_providers
+const providers = <Record<Attributes, (element: Element, name?: string) => string>>_providers
 
 type Attributes = keyof typeof _providers
 
@@ -20,10 +17,7 @@ function getAttributeArgument<Attribute extends Attributes>(
   }
 ) {
   if (selector.endsWith(')')) {
-    const argument = selector.slice(
-      result.index + result.key.length + 2 + 1,
-      -1
-    )
+    const argument = selector.slice(result.index + result.key.length + 2 + 1, -1)
     if (argument.length === 0) throw new LackArgumentError(result.key)
     return argument
   }
@@ -62,9 +56,7 @@ export default function (document: HTMLDocument, selector: string) {
     return provider.length > 1
       ? // eslint-disable-next-line unicorn/prefer-spread
         Array.from(document.querySelectorAll(selector.slice(0, result.index)))
-          .map((it) =>
-            provider(<HTMLElement>it, getAttributeArgument(selector, result))
-          )
+          .map((it) => provider(<HTMLElement>it, getAttributeArgument(selector, result)))
           .filter((element) => isStringAndNotBlank(element))
       : // eslint-disable-next-line unicorn/prefer-spread
         Array.from(document.querySelectorAll(selector.slice(0, result.index)))

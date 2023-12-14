@@ -14,14 +14,8 @@ test('should absolute href when target is a tag', (t) => {
         </body>
       </html>`)
   absoluteElements(document)
-  t.is(
-    document.querySelector('a')?.getAttribute('href'),
-    'https://example.com/foo'
-  )
-  t.is(
-    document.querySelectorAll('a')[1]?.getAttribute('href'),
-    'https://example.com/bar'
-  )
+  t.is(document.querySelector('a')?.getAttribute('href'), 'https://example.com/foo')
+  t.is(document.querySelectorAll('a')[1]?.getAttribute('href'), 'https://example.com/bar')
 })
 
 test('should absolute src when target is a img tag', (t) => {
@@ -36,14 +30,8 @@ test('should absolute src when target is a img tag', (t) => {
         </body>
       </html>`)
   absoluteElements(document)
-  t.is(
-    document.querySelector('img')?.getAttribute('src'),
-    'https://example.com/foo'
-  )
-  t.is(
-    document.querySelectorAll('img')[1]?.getAttribute('src'),
-    'https://example.com/bar'
-  )
+  t.is(document.querySelector('img')?.getAttribute('src'), 'https://example.com/foo')
+  t.is(document.querySelectorAll('img')[1]?.getAttribute('src'), 'https://example.com/bar')
 })
 
 test('should absolute data-src when target is a img tag', (t) => {
@@ -58,14 +46,8 @@ test('should absolute data-src when target is a img tag', (t) => {
         </body>
       </html>`)
   absoluteElements(document)
-  t.is(
-    document.querySelector('img')?.getAttribute('src'),
-    'https://example.com/foo'
-  )
-  t.is(
-    document.querySelectorAll('img')[1]?.getAttribute('src'),
-    'https://example.com/bar'
-  )
+  t.is(document.querySelector('img')?.getAttribute('src'), 'https://example.com/foo')
+  t.is(document.querySelectorAll('img')[1]?.getAttribute('src'), 'https://example.com/bar')
 })
 
 test('should prefer data-src over src when target is a img tag', (t) => {
@@ -79,8 +61,5 @@ test('should prefer data-src over src when target is a img tag', (t) => {
         </body>
       </html>`)
   absoluteElements(document)
-  t.is(
-    document.querySelector('img')?.getAttribute('src'),
-    'https://example.com/bar'
-  )
+  t.is(document.querySelector('img')?.getAttribute('src'), 'https://example.com/bar')
 })

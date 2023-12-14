@@ -26,7 +26,7 @@ export default {
     url: function* (input: string) {
       // https://stackoverflow.com/a/29831974
       yield parseHtml(input).querySelector('meta[property="article:author"]')?.getAttribute('content')
-    },
+    }
   },
   date: {
     published: function* (input: string) {

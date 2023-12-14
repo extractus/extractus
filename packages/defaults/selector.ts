@@ -5,12 +5,7 @@ import { pipe } from 'extra-utils'
 /**
  * @package
  */
-export const dateSelector = (input: Iterable<string>) =>
-  pipe(
-    input,
-    (it) => map(it, (it) => Date.parse(it)),
-    first
-  )
+export const dateSelector = (input: Iterable<string>) => pipe(input, (it) => map(it, (it) => Date.parse(it)), first)
 
 export default {
   date: {

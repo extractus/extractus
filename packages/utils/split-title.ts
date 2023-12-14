@@ -1,14 +1,10 @@
 import memoize from './memoize.js'
 
-const SEPARATORS = ['|', '-', '\\', '/', '>', '»', '·', '–'].map(
-  (it) => ` ${it} `
-)
+const SEPARATORS = ['|', '-', '\\', '/', '>', '»', '·', '–'].map((it) => ` ${it} `)
 
 export default memoize(
   function* (title: string) {
-    const separatorIndex = SEPARATORS.map((it) => title.lastIndexOf(it)).find(
-      (it) => it !== -1
-    )
+    const separatorIndex = SEPARATORS.map((it) => title.lastIndexOf(it)).find((it) => it !== -1)
     if (separatorIndex === undefined) {
       yield title
     } else {

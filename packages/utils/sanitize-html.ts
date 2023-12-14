@@ -94,9 +94,7 @@ export const defaultSanitizeOptions = <sanitize.IOptions>{
       }
     ]
   },
-  exclusiveFilter: (frame) =>
-    frame.tag === 'script' && frame.attribs['type'] !== 'application/ld+json'
+  exclusiveFilter: (frame) => frame.tag === 'script' && frame.attribs['type'] !== 'application/ld+json'
 }
 
-export default (html: string, options?: sanitize.IOptions) =>
-  sanitize(html, { ...defaultSanitizeOptions, ...options })
+export default (html: string, options?: sanitize.IOptions) => sanitize(html, { ...defaultSanitizeOptions, ...options })

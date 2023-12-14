@@ -15,8 +15,5 @@ test('should minify html', (t) => {
         </body>
       </html>
     `
-  t.is(
-    minifyHtml(html),
-    `<!doctypehtml><html><head><title>Test</title><body><div><p>Test</div>`
-  )
+  t.is(minifyHtml(html), `<!doctypehtml><html><head><title>Test</title><body><div><p>Test</div>`)
 })

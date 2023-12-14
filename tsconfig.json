@@ -1,7 +1,7 @@
 {
   "extends": "@sindresorhus/tsconfig",
   "compilerOptions": {
-    "module": "ES2022",
+    "module": "Node16",
     "esModuleInterop": true
   }
 }
