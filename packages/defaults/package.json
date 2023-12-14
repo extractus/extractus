@@ -20,11 +20,11 @@
     "@extractus/schema-org-jsonld": "link:..\\schema-org-jsonld",
     "@extractus/twitter-card": "link:..\\twitter-card",
     "@extractus/utils": "link:..\\utils",
-    "@stdlib/assert-is-uri": "^0.0.8",
+    "@stdlib/assert-is-uri": "^0.1.1",
     "condense-whitespace": "^3.0.0",
-    "extra-utils": "^5.3.0",
+    "extra-utils": "^5.5.2",
     "is-absolute-url": "^4.0.1",
     "iterable-operator": "^4.0.6",
-    "type-fest": "^4.0.0"
+    "type-fest": "^4.8.3"
   }
 }
