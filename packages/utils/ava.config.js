@@ -3,5 +3,5 @@ export default {
   extensions: {
     ts: 'module'
   },
-  nodeArguments: ['--loader=tsx --experimental-wasm-modules']
+  nodeArguments: ['--loader=tsx/esm --experimental-wasm-modules']
 }
