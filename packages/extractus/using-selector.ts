@@ -1,19 +1,65 @@
-import type { Selectors } from './index.js'
+import type { Selectors, TransformerReturn } from './index.js'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import { filter, first, isIterable, isntIterable, map } from 'iterable-operator'
+import { firstAsync, isAsyncIterable, toAsyncIterable } from 'iterable-operator'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
-import type { ObjectEntries } from 'type-fest/source/entries.js'
+import type { IterableElement } from 'type-fest'
+import { isFunction, isObject } from 'extra-utils'
 
-const defaultSelector = (input: Iterable<string>) => <string>first(input)
+const defaultSelector = (input: AsyncIterable<string>) => <Promise<string>>firstAsync(input)
 
-function usingSelector<TSelectors extends Selectors<unknown>>(selectors: TSelectors, context: ExtractContext) {
-  return <Input extends NestableRecord<Iterable<string>>>(input: Input) => <
+function usingSelector<TSelectors extends Selectors<T>, T>(
+  selectors: TSelectors,
+  context: ExtractContext
+) {
+  return async <Input extends NestableRecord<TransformerReturn>>(input: Input) => {
+    type Result = {
+      [K in keyof Input]:
+        | string
+        | T
+        | {
+            [SK in keyof Input[K]]: string | T
+          }
+    }
+    const result = <Result>{}
+    for (const path in input) {
+      const values = input[path]!
+      const selector = selectors[<string>path] ?? defaultSelector
+      const isSelector = isFunction(selector)
+      if (isSelector && isAsyncIterable<IterableElement<TransformerReturn>>(values)) {
+        result[path] = await selector(values, context)
+        if (!result[path]) delete result[path]
+        continue
+      }
+      if (isObject(values)) {
+        const subResult = <
+          {
+            [K in keyof Input[typeof path]]: string | T
+          }
+        >{}
+
+        for (const subPath in values) {
+          const subValue = values[subPath]!
+          const subSelector = isSelector ? undefined : selector[subPath]
+          const actualSelector = !isSelector ?? !subSelector ? defaultSelector : subSelector
+          subResult[<keyof Input[typeof path]>subPath] = await actualSelector(subValue, context)
+          if (!subResult[<keyof Input[typeof path]>subPath])
+            delete subResult[<keyof Input[typeof path]>subPath]
+        }
+
+        result[path] = subResult
+        continue
+      }
+
+      result[path] = await defaultSelector(values)
+      if (!result[path]) delete result[path]
+    }
+    return <
       {
-        [K in keyof Input]: Input[K] extends Iterable<string>
+        [K in keyof Input]: Input[K] extends AsyncIterable<string>
           ? K extends keyof TSelectors
             ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
               TSelectors[K] extends (...arguments_: any[]) => any
-              ? ReturnType<TSelectors[K]>
+              ? Awaited<ReturnType<TSelectors[K]>>
               : string
             : string
           : {
@@ -21,52 +67,14 @@ function usingSelector<TSelectors extends Selectors<unknown>>(selectors: TSelect
                 ? SK extends keyof TSelectors[K]
                   ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     TSelectors[K][SK] extends (...arguments_: any[]) => any
-                    ? ReturnType<TSelectors[K][SK]>
+                    ? Awaited<ReturnType<TSelectors[K][SK]>>
                     : string
                   : string
                 : string
             }
       }
-    >Object.fromEntries(
-      filter(
-        map(<ObjectEntries<typeof input>>Object.entries(input), ([key, values]) => {
-          const select = selectors[<string>key] ?? defaultSelector
-          if (isntIterable(values)) {
-            const invalidSelector = typeof select !== 'object'
-            const result = <
-              {
-                [SK in keyof typeof values]: SK extends keyof TSelectors
-                  ? TSelectors[SK]
-                  : ReturnType<typeof defaultSelector>
-              }
-            >Object.fromEntries(
-              filter(
-                map(<ObjectEntries<typeof values>>Object.entries(values), ([subKey, subValues]) => {
-                  const subSelect = invalidSelector ? undefined : select[<string>subKey]
-                  const actualSelect = invalidSelector ?? !subSelect ? defaultSelector : subSelect
-                  const result = actualSelect(subValues, context)
-                  if (result) return [subKey, result]
-                  return []
-                }),
-                (it) => it.length > 0
-              )
-            )
-            if (Object.keys(result).length > 0) return [key, result]
-            return []
-          }
-
-          if (typeof select !== 'object' && isIterable(values)) {
-            const result = select(values, context)
-            if (result) return [key, result]
-            return []
-          }
-          const result = defaultSelector(<Iterable<string>>values)
-          if (Object.keys(result).length > 0) return [key, result]
-          return []
-        }),
-        (it) => it.length > 0
-      )
-    )
+    >result
+  }
 }
 
 // noinspection JSUnusedLocalSymbols
@@ -75,26 +83,28 @@ function usingSelector<TSelectors extends Selectors<unknown>>(selectors: TSelect
  */
 // @ts-expect-error This function should be shaken off by esbuild
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function test() {
+async function test() {
   const selector = {
-    title: (input: Iterable<string>) => <string>first(input),
+    title: (input: AsyncIterable<string>) => <Promise<string>>firstAsync(input),
     content: {
-      text: (input: Iterable<string>) => <string>first(input)
+      text: (input: AsyncIterable<string>) => <Promise<string>>firstAsync(input)
     }
   } as const satisfies Selectors<string>
   const input = {
-    title: ['title'],
+    title: toAsyncIterable(['title']),
     content: {
-      text: ['text']
+      text: toAsyncIterable(['text'])
     }
   }
-  const selectors = usingSelector(selector, {})
-  return selectors(input) satisfies {
+  type Result = {
     title: string
     content: {
       text: string
     }
   }
+  const selectors = usingSelector(selector, {})
+  const result = await selectors(input)
+  return result satisfies Result
 }
 
 export default usingSelector

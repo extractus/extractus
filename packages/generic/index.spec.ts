@@ -1,9 +1,10 @@
+/* eslint-disable unicorn/no-await-expression-member */
 // TODO Add test
 
 import test from 'ava'
 import genericExtractor from './index.js'
 
-test('should extract title', (t) => {
+test('should extract title', async (t) => {
   const input = `
     <html><head><title>Page Title</title></head>
     <body>
@@ -14,15 +15,15 @@ test('should extract title', (t) => {
     </body></html>
   `
   const output = genericExtractor.title(input)
-  t.is(output.next().value, 'Post Title')
-  t.is(output.next().value, 'Entry Title')
-  t.is(output.next().value, 'h2 Title')
-  t.is(output.next().value, 'h1 Title')
-  t.is(output.next().value, 'Page Title')
-  t.true(output.next().done)
+  t.is((await output.next()).value, 'Post Title')
+  t.is((await output.next()).value, 'Entry Title')
+  t.is((await output.next()).value, 'h2 Title')
+  t.is((await output.next()).value, 'h1 Title')
+  t.is((await output.next()).value, 'Page Title')
+  t.true((await output.next()).done)
 })
 
-test('should extract url', (t) => {
+test('should extract url', async (t) => {
   const input = `
     <html><head><title>Page Title</title></head>
     <body>
@@ -33,14 +34,14 @@ test('should extract url', (t) => {
     </body></html>
   `
   const output = genericExtractor.url(input)
-  t.is(output.next().value, 'https://post-title.com')
-  t.is(output.next().value, 'https://entry-title.com')
-  t.is(output.next().value, 'https://h2-title.com')
-  t.is(output.next().value, 'https://h1-title.com')
-  t.true(output.next().done)
+  t.is((await output.next()).value, 'https://post-title.com')
+  t.is((await output.next()).value, 'https://entry-title.com')
+  t.is((await output.next()).value, 'https://h2-title.com')
+  t.is((await output.next()).value, 'https://h1-title.com')
+  t.true((await output.next()).done)
 })
 
-test('should extract author name', (t) => {
+test('should extract author name', async (t) => {
   const input = `
     <html><head><title>Page Title</title></head>
     <body>
@@ -56,20 +57,20 @@ test('should extract author name', (t) => {
     </body></html>
   `
   const output = genericExtractor.author.name(input)
-  t.is(output.next().value, 'Prop Name Author Name')
-  t.is(output.next().value, 'Prop Name Author Name')
-  t.is(output.next().value, 'Prop Author Name')
-  t.is(output.next().value, 'Rel Author Name')
-  t.is(output.next().value, 'Class Author Name')
-  t.is(output.next().value, 'Class Span A Author Name')
-  t.is(output.next().value, 'Link Author Name')
-  t.is(output.next().value, 'Class Author Name')
-  t.is(output.next().value, 'Class Span A Author Name')
-  t.is(output.next().value, 'Class Span Author Name')
-  t.true(output.next().done)
+  t.is((await output.next()).value, 'Prop Name Author Name')
+  t.is((await output.next()).value, 'Prop Name Author Name')
+  t.is((await output.next()).value, 'Prop Author Name')
+  t.is((await output.next()).value, 'Rel Author Name')
+  t.is((await output.next()).value, 'Class Author Name')
+  t.is((await output.next()).value, 'Class Span A Author Name')
+  t.is((await output.next()).value, 'Link Author Name')
+  t.is((await output.next()).value, 'Class Author Name')
+  t.is((await output.next()).value, 'Class Span A Author Name')
+  t.is((await output.next()).value, 'Class Span Author Name')
+  t.true((await output.next()).done)
 })
 
-test('should extract author url', (t) => {
+test('should extract author url', async (t) => {
   const input = `
     <html><head><title>Page Title</title></head>
     <body>
@@ -89,17 +90,17 @@ test('should extract author url', (t) => {
     </body></html>
   `
   const output = genericExtractor.author.url(input)
-  t.is(output.next().value, 'https://prop-name-author-name.com')
-  t.is(output.next().value, 'https://prop-author-name.com')
-  t.is(output.next().value, 'https://rel-author-name.com')
-  t.is(output.next().value, 'https://class-author-name.com')
-  t.is(output.next().value, 'https://class-span-a-author-name.com')
-  t.is(output.next().value, 'https://class-span-author-name.com')
-  t.is(output.next().value, 'https://test/author/author-name')
-  t.true(output.next().done)
+  t.is((await output.next()).value, 'https://prop-name-author-name.com')
+  t.is((await output.next()).value, 'https://prop-author-name.com')
+  t.is((await output.next()).value, 'https://rel-author-name.com')
+  t.is((await output.next()).value, 'https://class-author-name.com')
+  t.is((await output.next()).value, 'https://class-span-a-author-name.com')
+  t.is((await output.next()).value, 'https://class-span-author-name.com')
+  t.is((await output.next()).value, 'https://test/author/author-name')
+  t.true((await output.next()).done)
 })
 
-test('should extract modified time', (t) => {
+test('should extract modified time', async (t) => {
   const input = `
     <html></head>
     <body>
@@ -107,11 +108,11 @@ test('should extract modified time', (t) => {
     </body></html>
   `
   const output = genericExtractor.date.modified(input)
-  t.is(output.next().value, '2021-08-02T03:00:00Z')
-  t.true(output.next().done)
+  t.is((await output.next()).value, '2021-08-02T03:00:00Z')
+  t.true((await output.next()).done)
 })
 
-test('should extract published time', (t) => {
+test('should extract published time', async (t) => {
   const input = `
     <html></head>
     <body>
@@ -137,42 +138,42 @@ test('should extract published time', (t) => {
     </body></html>
   `
   const output = genericExtractor.date.published(input)
-  t.is(output.next().value, '2021-08-02T02:00:00Z')
-  t.is(output.next().value, '2021-08-02T03:00:00Z')
-  t.is(output.next().value, '2021-08-02T04:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T02:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T03:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T04:00:00Z')
 
   // time[datetime]
-  t.is(output.next().value, '2021-08-02T03:00:00Z')
-  t.is(output.next().value, '2021-08-02T04:00:00Z')
-  t.is(output.next().value, '2021-08-02T05:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T03:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T04:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T05:00:00Z')
 
   // [itemprop*="date" i]
-  t.is(output.next().value, '2021-08-02T02:00:00Z')
-  t.is(output.next().value, '2021-08-02T04:00:00Z')
-  t.is(output.next().value, '2021-08-02T06:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T02:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T04:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T06:00:00Z')
 
-  t.is(output.next().value, '2021-08-02T07:00:00Z')
-  t.is(output.next().value, '2021-08-02T08:00:00Z')
-  t.is(output.next().value, '2021-08-02T09:00:00Z')
-  t.is(output.next().value, '2021-08-02T10:00:00Z')
-  t.is(output.next().value, '2021-08-02T11:00:00Z')
-  t.is(output.next().value, '2021-08-02T12:00:00Z')
-  t.is(output.next().value, '2021-08-02T13:00:00Z')
-  t.is(output.next().value, '2021-08-02T14:00:00Z')
-  t.is(output.next().value, '2021-08-02T15:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T07:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T08:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T09:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T10:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T11:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T12:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T13:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T14:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T15:00:00Z')
   // [class*="date" i]
-  t.is(output.next().value, '2021-08-02T12:00:00Z')
-  t.is(output.next().value, '2021-08-02T16:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T12:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T16:00:00Z')
 
-  t.is(output.next().value, '2021-08-02T17:00:00Z')
-  t.is(output.next().value, '2021-08-02T18:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T17:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T18:00:00Z')
 
   // [id*="time" i]
-  t.is(output.next().value, '2021-08-02T08:00:00Z')
-  t.is(output.next().value, '2021-08-02T19:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T08:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T19:00:00Z')
 
   // [class*="time" i]
-  t.is(output.next().value, '2021-08-02T10:00:00Z')
-  t.is(output.next().value, '2021-08-02T20:00:00Z')
-  t.true(output.next().done)
+  t.is((await output.next()).value, '2021-08-02T10:00:00Z')
+  t.is((await output.next()).value, '2021-08-02T20:00:00Z')
+  t.true((await output.next()).done)
 })

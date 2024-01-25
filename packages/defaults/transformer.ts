@@ -1,9 +1,8 @@
-import type { Transformers } from '@extractus/extractus'
+import type { ExtractorReturn, Transformers } from '@extractus/extractus'
 import isStringAndNotBlank from '@extractus/utils/is-string-and-not-blank.js'
 import condenseWhitespace from 'condense-whitespace'
-import type { Optional } from '@extractus/utils/optional.js'
 import splitTitle from '@extractus/utils/split-title.js'
-import { filter, flatMap, map } from 'iterable-operator'
+import { filterAsync, flatMapAsync, mapAsync } from 'iterable-operator'
 import normalizeUrl from '@extractus/utils/normalize-url.js'
 import resolveUrl from '@extractus/utils/resolve-url.js'
 import isAbsoluteUrl from 'is-absolute-url'
@@ -14,18 +13,19 @@ import { pipe } from 'extra-utils'
 /**
  * @package
  */
-export const notBlank = (values: Iterable<Optional<string>>) => <Iterable<string>>filter(values, isStringAndNotBlank)
+export const notBlank = (values: ExtractorReturn) =>
+  <AsyncIterable<string>>filterAsync(values, isStringAndNotBlank)
 
 /**
  * @package
  */
-export const condense = (values: Iterable<string>) => map(values, condenseWhitespace)
+export const condense = (values: AsyncIterable<string>) => mapAsync(values, condenseWhitespace)
 
 /**
  * @package
  */
-export const processUrl = (values: Iterable<Optional<string>>, context?: ExtractContext) =>
-  map(values, (it) => {
+export const processUrl = (values: ExtractorReturn, context?: ExtractContext) =>
+  mapAsync(values, (it) => {
     if (it) {
       const result = resolveUrl(it, context?.url)
       return isAbsoluteUrl(result) ? normalizeUrl(result) : result
@@ -37,16 +37,17 @@ export const processUrl = (values: Iterable<Optional<string>>, context?: Extract
  * Transform the extracted strings.
  */
 export default {
-  title: (values: Iterable<Optional<string>>) => pipe(values, notBlank, condense, (it) => flatMap(it, splitTitle)),
+  title: (values: ExtractorReturn) =>
+    pipe(values, notBlank, condense, (it) => flatMapAsync(it, splitTitle)),
   url: processUrl,
   author: {
-    name: (values: Iterable<Optional<string>>) =>
-      pipe(values, (it) => filter(it, (it) => !isURI(it)), notBlank, condense),
+    name: (values: ExtractorReturn) =>
+      pipe(values, () => filterAsync(values, (it) => !isURI(it)), notBlank, condense),
     url: processUrl
   },
   image: processUrl,
   language: notBlank,
-  description: (values: Iterable<Optional<string>>) => pipe(values, notBlank, condense),
+  description: (values: ExtractorReturn) => pipe(values, notBlank, condense),
   date: {
     published: notBlank,
     modified: notBlank

@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-await-expression-member */
 import test from 'ava'
 import extractor from './index.js'
 
@@ -8,8 +9,8 @@ test('should extract title', async (t) => {
           <meta property='twitter:title' content='Hello World' />
         </head></html>`
   )
-  t.is(result.next().value, 'Hello World')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'Hello World')
+  t.true((await result.next()).done)
 })
 
 test('should extract url', async (t) => {
@@ -19,8 +20,8 @@ test('should extract url', async (t) => {
           <meta property='twitter:url' content='https://example.com' />
         </head></html>`
   )
-  t.is(result.next().value, 'https://example.com')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'https://example.com')
+  t.true((await result.next()).done)
 })
 
 test('should extract description', async (t) => {
@@ -30,8 +31,8 @@ test('should extract description', async (t) => {
           <meta property='twitter:description' content='Hello World' />
         </head></html>`
   )
-  t.is(result.next().value, 'Hello World')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'Hello World')
+  t.true((await result.next()).done)
 })
 
 test('should extract image', async (t) => {
@@ -41,6 +42,6 @@ test('should extract image', async (t) => {
           <meta property='twitter:image' content='https://example.com/image.png' />
         </head></html>`
   )
-  t.is(result.next().value, 'https://example.com/image.png')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'https://example.com/image.png')
+  t.true((await result.next()).done)
 })

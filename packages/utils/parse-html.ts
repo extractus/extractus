@@ -1,4 +1,3 @@
-import { DOMParser } from 'linkedom'
 import type sanitize from 'sanitize-html'
 import type { MinifyHtmlOptions } from './minify-html.js'
 import minifyHtml from './minify-html.js'
@@ -10,7 +9,18 @@ export interface ParseHtmlOptions {
 }
 
 export default memoize(
-  (input: string, options?: ParseHtmlOptions) =>
-    <HTMLDocument>(<unknown>new DOMParser().parseFromString(minifyHtml(input, options?.minify), 'text/html')),
+  async (input: string, options?: ParseHtmlOptions) => {
+    const html = minifyHtml(input, options?.minify)
+    const { Window } = await import('happy-dom')
+    if (Window) {
+      const window = new Window()
+      window.document.write(html)
+      return <Document><unknown>window.document
+    }
+    if (globalThis.DOMParser) {
+      return <Document>(<unknown>new globalThis.DOMParser().parseFromString(html, 'text/html'))
+    }
+    throw new Error("Can't find a usable html parser")
+  },
   { maxSize: 2 }
 )

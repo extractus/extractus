@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-await-expression-member */
 // noinspection HtmlRequiredTitleElement,HtmlRequiredLangAttribute
 
 import test from 'ava'
@@ -15,9 +16,9 @@ test('should extract title', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.title(html)
-  t.is(result.next().value, 'headline')
-  t.is(result.next().value, 'Nested headline')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'headline')
+  t.is((await result.next()).value, 'Nested headline')
+  t.true((await result.next()).done)
 })
 
 test('should extract url', async (t) => {
@@ -32,9 +33,9 @@ test('should extract url', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.url(html)
-  t.is(result.next().value, 'https://url')
-  t.is(result.next().value, 'https://nested-url')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'https://url')
+  t.is((await result.next()).value, 'https://nested-url')
+  t.true((await result.next()).done)
 })
 
 test('should extract description', async (t) => {
@@ -51,11 +52,11 @@ test('should extract description', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.description(html)
-  t.is(result.next().value, 'articleBody')
-  t.is(result.next().value, 'nested articleBody')
-  t.is(result.next().value, 'description')
-  t.is(result.next().value, 'nested description')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'articleBody')
+  t.is((await result.next()).value, 'nested articleBody')
+  t.is((await result.next()).value, 'description')
+  t.is((await result.next()).value, 'nested description')
+  t.true((await result.next()).done)
 })
 
 test('should extract author name', async (t) => {
@@ -76,11 +77,11 @@ test('should extract author name', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.author.name(html)
-  t.is(result.next().value, 'author name')
-  t.is(result.next().value, 'nested author name')
-  t.is(result.next().value, 'brand name')
-  t.is(result.next().value, 'nested brand name')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'author name')
+  t.is((await result.next()).value, 'nested author name')
+  t.is((await result.next()).value, 'brand name')
+  t.is((await result.next()).value, 'nested brand name')
+  t.true((await result.next()).done)
 })
 
 test('should extract author url', async (t) => {
@@ -99,9 +100,9 @@ test('should extract author url', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.author.url(html)
-  t.is(result.next().value, 'https://url')
-  t.is(result.next().value, 'https://nested-url')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'https://url')
+  t.is((await result.next()).value, 'https://nested-url')
+  t.true((await result.next()).done)
 })
 
 test('should extract image', async (t) => {
@@ -116,20 +117,20 @@ test('should extract image', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.image(html)
-  t.is(result.next().value, 'https://image')
-  t.is(result.next().value, 'https://nested-image')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'https://image')
+  t.is((await result.next()).value, 'https://nested-image')
+  t.true((await result.next()).done)
 })
 
-test('should not extract image when it is not creative work', (t) => {
+test('should not extract image when it is not creative work', async (t) => {
   const html = `
       <html><head>
         <script type='application/ld+json'>{
           "image": "https://image"
         }</script></head></html>`
   const result = schemaOrgJsonld.image(html)
-  t.is(result.next().value, undefined)
-  t.true(result.next().done)
+  t.is((await result.next()).value, undefined)
+  t.true((await result.next()).done)
 })
 
 test('should extract language', async (t) => {
@@ -144,9 +145,9 @@ test('should extract language', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.language(html)
-  t.is(result.next().value, 'en')
-  t.is(result.next().value, 'nested en')
-  t.true(result.next().done)
+  t.is((await result.next()).value, 'en')
+  t.is((await result.next()).value, 'nested en')
+  t.true((await result.next()).done)
 })
 
 test('should extract date published', async (t) => {
@@ -163,11 +164,11 @@ test('should extract date published', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.date.published(html)
-  t.is(result.next().value, '2020-01-01')
-  t.is(result.next().value, '2020-01-03')
-  t.is(result.next().value, '2020-01-02')
-  t.is(result.next().value, '2020-01-04')
-  t.true(result.next().done)
+  t.is((await result.next()).value, '2020-01-01')
+  t.is((await result.next()).value, '2020-01-03')
+  t.is((await result.next()).value, '2020-01-02')
+  t.is((await result.next()).value, '2020-01-04')
+  t.true((await result.next()).done)
 })
 
 test('should extract date modified', async (t) => {
@@ -184,9 +185,9 @@ test('should extract date modified', async (t) => {
           }]
         }</script></head></html>`
   const result = schemaOrgJsonld.date.modified(html)
-  t.is(result.next().value, '2020-01-01')
-  t.is(result.next().value, '2020-01-03')
-  t.is(result.next().value, '2020-01-02')
-  t.is(result.next().value, '2020-01-04')
-  t.true(result.next().done)
+  t.is((await result.next()).value, '2020-01-01')
+  t.is((await result.next()).value, '2020-01-03')
+  t.is((await result.next()).value, '2020-01-02')
+  t.is((await result.next()).value, '2020-01-04')
+  t.true((await result.next()).done)
 })

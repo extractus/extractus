@@ -49,7 +49,7 @@ function getAttributeKey(selector: string) {
  *                 The extra pesudo class have to at the end of selector.
  * @return string[]
  */
-export default function (document: HTMLDocument, selector: string) {
+export default function (document: Document, selector: string) {
   const result = getAttributeKey(selector)
   if (result) {
     const provider = providers[result.key]

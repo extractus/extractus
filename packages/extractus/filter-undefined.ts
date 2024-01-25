@@ -1,32 +1,44 @@
 import type { TransformerReturn } from './index.js'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
-import { filter, isntIterable, map, toArray } from 'iterable-operator'
-import type { ObjectEntries } from 'type-fest/source/entries.js'
+import { filterAsync, isAsyncIterable, toArrayAsync } from 'iterable-operator'
 import { DEBUG } from './logger.js'
+import type { IterableElement } from 'type-fest'
 
-const applyFilter = (input: TransformerReturn): Iterable<string> =>
-  DEBUG ? toArray(filter<string>(input, (it) => !!it)) : filter<string>(input, (it) => !!it)
+const applyFilter = async (input: TransformerReturn) =>
+  DEBUG
+    ? await toArrayAsync(filterAsync<string>(input, (it) => !!it))
+    : filterAsync<string>(input, (it) => !!it)
 
-const filterUndefined = <Input extends NestableRecord<TransformerReturn>>(input: Input) => <
+type Filtered = AsyncIterable<string> | string[]
+
+const filterUndefined = async <Input extends NestableRecord<TransformerReturn>>(input: Input) => {
+  const result = <
     {
-      [K in keyof Input]: Input[K] extends TransformerReturn
-        ? Iterable<string>
-        : {
-            [SK in keyof Input[K]]: Iterable<string>
+      [K in keyof Input]:
+        | Filtered
+        | {
+            [SK in keyof Input[K]]: Filtered
           }
     }
-  >Object.fromEntries(
-    map(<ObjectEntries<Input>>Object.entries(input), ([key, values]) => {
-      if (isntIterable(values)) {
-        return [key, <
-            {
-              [SK in keyof typeof values]: Iterable<string>
-            }
-          >Object.fromEntries(map(<ObjectEntries<typeof values>>Object.entries(values), ([subKey, subValue]) => [subKey, applyFilter(subValue)]))]
+  >{}
+  for (const path in input) {
+    const values = input[path]
+    if (isAsyncIterable<IterableElement<TransformerReturn>>(values)) {
+      result[path] = await applyFilter(values)
+      continue
+    }
+    const subResult = <
+      {
+        [SK in keyof Input[typeof path]]: Filtered
       }
-
-      return [key, applyFilter(<TransformerReturn>values)]
-    })
-  )
+    >{}
+    for (const subPath in values) {
+      const subValues = values[subPath]!
+      subResult[subPath] = await applyFilter(subValues)
+    }
+    result[path] = subResult
+  }
+  return result
+}
 
 export default filterUndefined

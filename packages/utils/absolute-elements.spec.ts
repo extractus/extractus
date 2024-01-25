@@ -2,8 +2,8 @@ import test from 'ava'
 import parseHtml from './parse-html.js'
 import absoluteElements from './absolute-elements.js'
 
-test('should absolute href when target is a tag', (t) => {
-  const document = parseHtml(`
+test('should absolute href when target is a tag', async (t) => {
+  const document = await parseHtml(`
       <html>
         <head>
           <base href='https://example.com/'>
@@ -18,8 +18,8 @@ test('should absolute href when target is a tag', (t) => {
   t.is(document.querySelectorAll('a')[1]?.getAttribute('href'), 'https://example.com/bar')
 })
 
-test('should absolute src when target is a img tag', (t) => {
-  const document = parseHtml(`
+test('should absolute src when target is a img tag', async (t) => {
+  const document = await parseHtml(`
       <html>
         <head>
           <base href='https://example.com/'>
@@ -34,8 +34,8 @@ test('should absolute src when target is a img tag', (t) => {
   t.is(document.querySelectorAll('img')[1]?.getAttribute('src'), 'https://example.com/bar')
 })
 
-test('should absolute data-src when target is a img tag', (t) => {
-  const document = parseHtml(`
+test('should absolute data-src when target is a img tag', async (t) => {
+  const document = await parseHtml(`
       <html>
         <head>
           <base href='https://example.com/'>
@@ -50,8 +50,8 @@ test('should absolute data-src when target is a img tag', (t) => {
   t.is(document.querySelectorAll('img')[1]?.getAttribute('src'), 'https://example.com/bar')
 })
 
-test('should prefer data-src over src when target is a img tag', (t) => {
-  const document = parseHtml(`
+test('should prefer data-src over src when target is a img tag', async (t) => {
+  const document = await parseHtml(`
       <html>
         <head>
           <base href='https://example.com/'>

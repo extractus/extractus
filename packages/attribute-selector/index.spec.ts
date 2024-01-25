@@ -2,10 +2,10 @@ import test from 'ava'
 import attributeSelector from './index.js'
 import parseHtml from '@extractus/utils/parse-html.js'
 
-let document: HTMLDocument
+let document: Document
 
-test.beforeEach(() => {
-  document = parseHtml('<html><body><p id="foo">Foo</p></body></html>')
+test.beforeEach(async () => {
+  document = await parseHtml('<html><body><p id="foo">Foo</p></body></html>')
 })
 
 test('should return p tag when selector is not end with ::text or ::attr', (t) => {

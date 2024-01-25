@@ -1,34 +1,36 @@
 import parseHtml from '@extractus/utils/parse-html.js'
 import type { Extractors } from '@extractus/extractus'
-import { flatMap, map } from 'iterable-operator'
+import { flatMap, flatMapAsync, map, mapAsync } from 'iterable-operator'
 
 // Some itemprop is from https://schema.org/. Should be split into another extractor
 export default {
-  title: function* (input: string) {
+  title: async function* (input: string) {
+    const document = await parseHtml(input)
     yield* map(
       /**
        * Seems `.post-title, .entry-title` are from WordPress.
        * I haven't found the original of them. And there are so many website using them.
        * So, they are in `generic`
        */
-      flatMap(['.post-title', '.entry-title', ':is(h1, h2)[class*="title" i]'], (it) =>
-        parseHtml(input).querySelectorAll(it)
+      flatMap(['.post-title', '.entry-title', ':is(h1, h2)[class*="title" i]'], (selector) =>
+        document.querySelectorAll(selector)
       ),
       (it) => it.textContent
     )
-    yield parseHtml(input).title
+    yield document.title
   },
   url: (input: string) =>
-    map(
-      flatMap(['.post-title a', '.entry-title a', ':is(h1, h2)[class*="title" i] a'], (it) =>
-        parseHtml(input).querySelectorAll(it)
-      ),
+    mapAsync(
+      flatMapAsync(['.post-title a', '.entry-title a', ':is(h1, h2)[class*="title" i] a'], async (it) => {
+        const document = await parseHtml(input)
+        return document.querySelectorAll(it)
+      }),
       (it) => it.getAttribute('href')
     ),
   author: {
     name: (input: string) =>
-      map(
-        flatMap(
+      mapAsync(
+        flatMapAsync(
           [
             // Should from schema.org
             '[itemprop*="author" i] [itemprop="name"]',
@@ -39,11 +41,15 @@ export default {
             'a[href*="/author/" i]',
             '[class*="author" i]'
           ],
-          (it) => parseHtml(input).querySelectorAll(it)
+          async (it) => {
+            const document = await parseHtml(input)
+            return document.querySelectorAll(it)
+          }
         ),
         (it) => it.textContent
       ),
-    url: function* (input: string) {
+    url: async function* (input: string) {
+      const document = await parseHtml(input)
       yield* map(
         flatMap(
           [
@@ -55,7 +61,7 @@ export default {
             '[class*="author" i] a[href]',
             'a[href*="/author/" i]'
           ],
-          (it) => parseHtml(input).querySelectorAll(it)
+          (it) => document.querySelectorAll(it)
         ),
         (it) => it.getAttribute('href')
       )
@@ -64,9 +70,15 @@ export default {
   date: {
     modified: (input: string) =>
       // Should from schema.org
-      map(parseHtml(input).querySelectorAll('[itemprop*="datemodified" i]'), (it) => it.getAttribute('content')),
-    published: function* (input: string) {
-      const document = parseHtml(input)
+      mapAsync(
+        flatMapAsync(['[itemprop*="datemodified" i]'], async (it) => {
+          const document = await parseHtml(input)
+          return document.querySelectorAll(it)
+        }),
+        (it) => it.getAttribute('content')
+      ),
+    published: async function* (input: string) {
+      const document = await parseHtml(input)
       // Should from schema.org
       yield document.querySelector('[itemprop*="datepublished" i]')?.getAttribute('content')
       yield* map(

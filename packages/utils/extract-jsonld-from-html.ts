@@ -4,8 +4,8 @@ import memoize from './memoize.js'
 import type { UnknownRecord } from 'type-fest/source/internal.js'
 
 export default memoize(
-  function <T extends UnknownRecord = UnknownRecord>(input: string) {
-    const document = parseHtml(input)
+  async function <T extends UnknownRecord = UnknownRecord>(input: string) {
+    const document = await parseHtml(input)
     const string = document?.querySelector('script[type="application/ld+json"]')?.textContent
     if (!string) return
     return parseJson<T>(string)

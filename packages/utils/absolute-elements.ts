@@ -1,6 +1,6 @@
 import resolveUrl from './resolve-url.js'
 
-export default function (document: HTMLDocument, base: string = document.baseURI) {
+export default function (document: Document, base: string = document.baseURI) {
   if (!base) return document
 
   // eslint-disable-next-line unicorn/prefer-spread

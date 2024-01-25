@@ -1,14 +1,15 @@
 /**
  * Based on https://github.com/fastify/deepmerge
  */
-import type { EmptyObject, ValueOf } from 'type-fest'
-import type { BuiltIns, KeysOfUnion, UnknownRecord } from 'type-fest/source/internal.js'
+import type { EmptyObject, KeysOfUnion, ValueOf } from 'type-fest'
+import type { BuiltIns, UnknownRecord } from 'type-fest/source/internal.js'
 import type { GetValue } from './get-value.js'
 import { concat, concatAsync, isAsyncIterable, isIterable } from 'iterable-operator'
 import { isArray, isntDate, isntRegExp, isObject } from 'extra-utils'
 
 type DefaultIgnore =
   | BuiltIns
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   | ((...a: any[]) => any)
 
 export declare type DeepMerged<T, Ignored = never> = [T] extends [unknown[]]
@@ -162,6 +163,14 @@ export function deepMerge<T>(...arguments_: T[]) {
   }
   let result = <DeepMerged<T>>{}
   for (const argument of arguments_) {
+    result = <DeepMerged<T>>merge(result, argument)
+  }
+  return result
+}
+
+export async function deepMergeAsync<T>(iterable: AsyncIterable<T>) {
+  let result = <DeepMerged<T>>{}
+  for await (const argument of iterable) {
     result = <DeepMerged<T>>merge(result, argument)
   }
   return result

@@ -1,11 +1,15 @@
-import { first, map } from 'iterable-operator'
+import { firstAsync, mapAsync } from 'iterable-operator'
 import type { Selectors } from '@extractus/extractus'
 import { pipe } from 'extra-utils'
 
 /**
  * @package
  */
-export const dateSelector = (input: Iterable<string>) => pipe(input, (it) => map(it, (it) => Date.parse(it)), first)
+export const dateSelector = (input: AsyncIterable<string>) =>
+  pipe(
+    mapAsync(input, (it) => Date.parse(it)),
+    firstAsync
+  )
 
 export default {
   date: {

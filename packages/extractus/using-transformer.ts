@@ -1,51 +1,87 @@
 import type { ExtractorReturn, Transformer, TransformerReturn, Transformers } from './index.js'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import { isIterable, isntIterable, map, toArray } from 'iterable-operator'
-import type { Optional } from '@extractus/utils/optional.js'
+import {
+  isAsyncIterable,
+  isntAsyncIterable,
+  toArrayAsync,
+  toAsyncIterable
+} from 'iterable-operator'
 import { DEBUG } from './logger.js'
-import type { ObjectEntries } from 'type-fest/source/entries.js'
+import type { IterableElement, ValueOf } from 'type-fest'
+import { isFunction, isObject } from 'extra-utils'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
 
-const applyTransformer = (transformer: Transformer, input: ExtractorReturn, context: ExtractContext) =>
-  DEBUG ? toArray(transformer(input, context)) : transformer(input, context)
+const applyTransformer = async (
+  transformer: Transformer,
+  input: ExtractorReturn,
+  context: ExtractContext
+) => {
+  const transformed = transformer(input, context)
+  if (DEBUG) {
+    return await toArrayAsync(transformed)
+  }
+  return transformed
+}
+
+type UsingTransformerElement = TransformerReturn | Array<IterableElement<TransformerReturn>>
 
 const usingTransformer =
   <TTransformers extends Transformers>(transformers: TTransformers, context: ExtractContext) =>
-  <Input extends NestableRecord<ExtractorReturn>>(input: Input) =>
-    <
+  async <Input extends NestableRecord<ExtractorReturn>>(input: Input) => {
+    type Result = {
+      [K in keyof Input]:
+        | {
+            [SK in keyof Input[K]]: UsingTransformerElement
+          }
+        | UsingTransformerElement
+    }
+    const result = <Result>{}
+
+    for (const path in input) {
+      const transformerOrNested = transformers[path]!
+      const isTransformer = isFunction(transformerOrNested)
+      const values = input[path]
+
+      if (isTransformer && isAsyncIterable<ValueOf<Input>>(values)) {
+        result[path] = await applyTransformer(transformerOrNested, values, context)
+        continue
+      }
+      if (isObject(values)) {
+        type SubKeys = keyof Input[typeof path]
+        const subResult = <
+          {
+            [K in SubKeys]: UsingTransformerElement
+          }
+        >{}
+        for (const subPath in values) {
+          const subValue = values[subPath]!
+          if (isTransformer) {
+            subResult[<SubKeys>subPath] = subValue
+            continue
+          }
+          const subTransformer = transformerOrNested[subPath]
+          if (!subTransformer) {
+            subResult[<SubKeys>subPath] = subValue
+            continue
+          }
+          subResult[<SubKeys>subPath] = await applyTransformer(subTransformer, subValue, context)
+        }
+        result[path] = subResult
+        continue
+      }
+
+      result[path] = <ExtractorReturn>values
+    }
+    return <
       {
         [K in keyof Input]: Input[K] extends ExtractorReturn
-          ? TransformerReturn
+          ? ExtractorReturn
           : {
-              [SK in keyof Input[K]]: TransformerReturn
+              [SK in keyof Input[K]]: ExtractorReturn
             }
       }
-    >Object.fromEntries(
-      map(<ObjectEntries<Input>>Object.entries(input), ([key, values]) => {
-        const transform = transformers[<string>key]
-        const invalidTransformer = typeof transform !== 'object'
-
-        if (isntIterable(values)) {
-          return [key, <
-              {
-                [SK in keyof typeof values]: TransformerReturn
-              }
-            >Object.fromEntries(
-              map(<ObjectEntries<typeof values>>Object.entries(values), ([subKey, subValue]) => {
-                if (invalidTransformer) return [subKey, subValue]
-                const subTransform = transform[<string>subKey]
-                if (!subTransform) return [subKey, subValue]
-                return [subKey, applyTransformer(subTransform, subValue, context)]
-              })
-            )]
-        }
-
-        if (invalidTransformer && transform && isIterable<Optional<string>>(values))
-          return [key, applyTransformer(transform, values, context)]
-
-        return [key, values]
-      })
-    )
+    >result
+  }
 
 // noinspection JSUnusedLocalSymbols
 /**
@@ -53,28 +89,43 @@ const usingTransformer =
  */
 // @ts-expect-error This function should be shaken off by esbuild
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function test() {
+async function test() {
   const transformer = {
-    title: (input: ExtractorReturn) => input,
+    title: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input),
     content: {
-      text: (input: ExtractorReturn) => input,
-      html: (input: ExtractorReturn) => input
-    }
-  }
+      text: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input),
+      html: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input)
+    },
+    nestTransformer: {
+      test: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input)
+    },
+    nestData: (input: ExtractorReturn) =>
+      isntAsyncIterable(input) ? toAsyncIterable(input) : input
+  } satisfies Transformers
   const input = {
-    title: ['data'],
+    title: toAsyncIterable(['data']),
     content: {
-      text: ['data'],
-      html: ['data']
+      text: toAsyncIterable(['data']),
+      html: toAsyncIterable(['data'])
+    },
+    nestTransformer: toAsyncIterable(['data']),
+    nestData: {
+      test: toAsyncIterable(['data'])
     }
   }
-  return usingTransformer(transformer, {})(input) satisfies {
-    title: TransformerReturn
+  const result = await usingTransformer(transformer, {})(input)
+  type Result = {
+    title: UsingTransformerElement
     content: {
-      text: TransformerReturn
-      html: TransformerReturn
+      text: UsingTransformerElement
+      html: UsingTransformerElement
+    }
+    nestTransformer: UsingTransformerElement
+    nestData: {
+      test: UsingTransformerElement
     }
   }
+  return result satisfies Result
 }
 
 export default usingTransformer
