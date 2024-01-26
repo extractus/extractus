@@ -1,5 +1,4 @@
 /* eslint-disable unicorn/no-await-expression-member */
-// TODO Add test
 
 import test from 'ava'
 import genericExtractor from './index.js'
@@ -15,6 +14,7 @@ test('should extract title', async (t) => {
     </body></html>
   `
   const output = genericExtractor.title(input)
+
   t.is((await output.next()).value, 'Post Title')
   t.is((await output.next()).value, 'Entry Title')
   t.is((await output.next()).value, 'h2 Title')

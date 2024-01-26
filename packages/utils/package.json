@@ -21,6 +21,7 @@
     "happy-dom": "^13.3.1",
     "is-chinese": "^2.0.0",
     "iterable-operator": "^4.0.6",
+    "linkedom": "^0.16.8",
     "micro-memoize": "^4.1.2",
     "mpath": "https://github.com/mongoosejs/mpath",
     "normalize-url": "^8.0.0",

@@ -3,7 +3,7 @@ import type { ExtractContext } from '@extractus/utils/extract-context.js'
 import { firstAsync, isAsyncIterable, toAsyncIterable } from 'iterable-operator'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
 import type { IterableElement } from 'type-fest'
-import { isFunction, isObject } from 'extra-utils'
+import { isFunction, isntEmptyObject, isObject } from 'extra-utils'
 
 const defaultSelector = (input: AsyncIterable<string>) => <Promise<string>>firstAsync(input)
 
@@ -45,8 +45,7 @@ function usingSelector<TSelectors extends Selectors<T>, T>(
           if (!subResult[<keyof Input[typeof path]>subPath])
             delete subResult[<keyof Input[typeof path]>subPath]
         }
-
-        result[path] = subResult
+        if (isntEmptyObject(subResult)) result[path] = subResult
         continue
       }
 

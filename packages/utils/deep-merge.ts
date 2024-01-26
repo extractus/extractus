@@ -4,7 +4,15 @@
 import type { EmptyObject, KeysOfUnion, ValueOf } from 'type-fest'
 import type { BuiltIns, UnknownRecord } from 'type-fest/source/internal.js'
 import type { GetValue } from './get-value.js'
-import { concat, concatAsync, isAsyncIterable, isIterable } from 'iterable-operator'
+import {
+  concat,
+  concatAsync,
+  isAsyncIterable,
+  isIterable,
+  map,
+  mapAsync,
+  toArray
+} from 'iterable-operator'
 import { isArray, isntDate, isntRegExp, isObject } from 'extra-utils'
 
 type DefaultIgnore =
@@ -17,18 +25,19 @@ export declare type DeepMerged<T, Ignored = never> = [T] extends [unknown[]]
       [K in keyof T]: DeepMerged<T[K], Ignored>
     }
   : [T] extends [Iterable<infer R>]
-  ? Iterable<DeepMerged<R, Ignored>>
-  : [T] extends [AsyncIterable<infer R>]
-  ? AsyncIterable<DeepMerged<R, Ignored>>
-  : [T] extends [Ignored | DefaultIgnore]
-  ? T
-  : [T] extends [UnknownRecord]
-  ? {
-      [K in KeysOfUnion<T>]: DeepMerged<GetValue<T, K>, Ignored>
-    }
-  : T
+    ? Iterable<DeepMerged<R, Ignored>>
+    : [T] extends [AsyncIterable<infer R>]
+      ? AsyncIterable<DeepMerged<R, Ignored>>
+      : [T] extends [Ignored | DefaultIgnore]
+        ? T
+        : [T] extends [UnknownRecord]
+          ? {
+              [K in KeysOfUnion<T>]: DeepMerged<GetValue<T, K>, Ignored>
+            }
+          : T
 
-const isPrototypeKey = (value: PropertyKey) => value === 'constructor' || value === 'prototype' || value === '__proto__'
+const isPrototypeKey = (value: PropertyKey) =>
+  value === 'constructor' || value === 'prototype' || value === '__proto__'
 
 const isntBuiltIn = <T>(value: T): value is Exclude<T, BuiltIns> =>
   isObject(value) && isntRegExp(value) && isntDate(value)
@@ -36,45 +45,55 @@ const isntBuiltIn = <T>(value: T): value is Exclude<T, BuiltIns> =>
 const isBuiltIn = (value: unknown): value is BuiltIns => !isntBuiltIn(value)
 
 type CloneableRecord = { [K in PropertyKey]: Cloneable }
-type Cloneable = BuiltIns | Iterable<Cloneable> | Cloneable[] | CloneableRecord
+type Cloneable =
+  | BuiltIns
+  | Iterable<Cloneable>
+  | AsyncIterable<Cloneable>
+  | Cloneable[]
+  | CloneableRecord
 type Cloned<T extends Cloneable, U = T> = U extends BuiltIns
   ? T
   : U extends Array<infer R extends Cloneable>
-  ? Array<Cloned<R>>
-  : U extends Iterable<infer R extends Cloneable>
-  ? Iterable<Cloned<R>>
-  : U extends { [K in infer Keys]: infer Values extends Cloneable }
-  ? {
-      [K in Keys]: Cloned<Values>
-    }
-  : never
+    ? Array<Cloned<R>>
+    : U extends Iterable<infer R extends Cloneable>
+      ? Iterable<Cloned<R>>
+      : U extends AsyncIterable<infer R extends Cloneable>
+        ? AsyncIterable<Cloned<R>>
+        : U extends { [K in infer Keys]: infer Values extends Cloneable }
+          ? {
+              [K in Keys]: Cloned<Values>
+            }
+          : never
 
 const clone = <T extends Cloneable>(entry: T): Cloned<T> => {
   // string is Iterable. Should handle first
   if (isBuiltIn(entry)) return <Cloned<T>>entry
   if (isArray(entry)) return <Cloned<T>>cloneArray(entry)
   if (isIterable(entry)) return <Cloned<T>>cloneIterable(entry)
+  if (isAsyncIterable(entry)) return <Cloned<T>>cloneAsyncIterable(entry)
   return <Cloned<T>>cloneObject(<CloneableRecord>entry)
 }
 
 function cloneArray<T extends Cloneable>(value: T[]) {
-  const result = Array.from<Cloned<T>>({ length: value.length })
-  for (const [index, element] of value.entries()) {
-    result[index] = clone(element)
-  }
-
+  const result = toArray(map(value, clone))
   return result satisfies Cloned<typeof value>
 }
 
-function cloneIterable<T extends Cloneable>(value: Iterable<T>) {
-  const iterable = <Iterable<Cloned<T>>>(function* () {
-    for (const item of value) yield clone(item)
-  })()
-
+function cloneIterable<T extends Cloneable>(value: Iterable<T>): Cloned<Iterable<T>> {
+  const iterable = map(value, clone)
   return iterable satisfies Cloned<typeof value>
 }
 
-function cloneObject<Keys extends PropertyKey, Values extends Cloneable>(target: Record<Keys, Values>) {
+function cloneAsyncIterable<T extends Cloneable>(
+  value: AsyncIterable<T>
+): Cloned<AsyncIterable<T>> {
+  const iterable = mapAsync(value, clone)
+  return iterable satisfies Cloned<typeof value>
+}
+
+function cloneObject<Keys extends PropertyKey, Values extends Cloneable>(
+  target: Record<Keys, Values>
+) {
   const result = <Record<Keys, Cloned<Values>>>{}
   const targetKeys = <Keys[]>Object.keys(target)
   for (const key of targetKeys) {

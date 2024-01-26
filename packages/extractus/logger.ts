@@ -2,6 +2,10 @@ import log from 'loglevel'
 import chalk from 'chalk'
 import logPrefix from 'loglevel-plugin-prefix'
 import objectInspect from 'object-inspect'
+import nestedAsyncIterableToArray from '@extractus/utils/nested-async-iterable-to-array.js'
+import { NestableRecord } from '@extractus/utils/nestable-record.js'
+import nestedArrayToAsyncIterable from '@extractus/utils/nested-array-to-async-iterable.js'
+import { Optional } from '@extractus/utils/optional.js'
 
 export const DEBUG = Boolean(process?.env?.['DEBUG'])
 
@@ -36,11 +40,23 @@ try {
 }
 
 export { default } from 'loglevel'
-export const debug =
-  (prefix: string) =>
-  <T>(it: T) => {
-    if (DEBUG) {
-      log.debug(prefix, inspectExist ? it : objectInspect(it, { indent: 2 }))
-    }
-    return it
+export const debug = <T>(prefix: string, it: T) => {
+  if (DEBUG) {
+    log.debug(prefix, inspectExist ? it : objectInspect(it, { indent: 2 }))
   }
+  return it
+}
+
+export const debugNestedIterable = async <
+  T extends NestableRecord<AsyncIterable<Optional<unknown>>>
+>(
+  prefix: string,
+  it: T
+) => {
+  if (DEBUG) {
+    const result = await nestedAsyncIterableToArray(it)
+    debug(prefix, result)
+    return await nestedArrayToAsyncIterable(result)
+  }
+  return it
+}

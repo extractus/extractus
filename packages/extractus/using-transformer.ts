@@ -1,29 +1,9 @@
-import type { ExtractorReturn, Transformer, TransformerReturn, Transformers } from './index.js'
+import type { ExtractorReturn, TransformerReturn, Transformers } from './index.js'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import {
-  isAsyncIterable,
-  isntAsyncIterable,
-  toArrayAsync,
-  toAsyncIterable
-} from 'iterable-operator'
-import { DEBUG } from './logger.js'
-import type { IterableElement, ValueOf } from 'type-fest'
+import { isAsyncIterable, isntAsyncIterable, toAsyncIterable } from 'iterable-operator'
+import type { ValueOf } from 'type-fest'
 import { isFunction, isObject } from 'extra-utils'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
-
-const applyTransformer = async (
-  transformer: Transformer,
-  input: ExtractorReturn,
-  context: ExtractContext
-) => {
-  const transformed = transformer(input, context)
-  if (DEBUG) {
-    return await toArrayAsync(transformed)
-  }
-  return transformed
-}
-
-type UsingTransformerElement = TransformerReturn | Array<IterableElement<TransformerReturn>>
 
 const usingTransformer =
   <TTransformers extends Transformers>(transformers: TTransformers, context: ExtractContext) =>
@@ -31,9 +11,9 @@ const usingTransformer =
     type Result = {
       [K in keyof Input]:
         | {
-            [SK in keyof Input[K]]: UsingTransformerElement
+            [SK in keyof Input[K]]: TransformerReturn
           }
-        | UsingTransformerElement
+        | TransformerReturn
     }
     const result = <Result>{}
 
@@ -43,14 +23,14 @@ const usingTransformer =
       const values = input[path]
 
       if (isTransformer && isAsyncIterable<ValueOf<Input>>(values)) {
-        result[path] = await applyTransformer(transformerOrNested, values, context)
+        result[path] = transformerOrNested(values, context)
         continue
       }
       if (isObject(values)) {
         type SubKeys = keyof Input[typeof path]
         const subResult = <
           {
-            [K in SubKeys]: UsingTransformerElement
+            [K in SubKeys]: TransformerReturn
           }
         >{}
         for (const subPath in values) {
@@ -64,7 +44,7 @@ const usingTransformer =
             subResult[<SubKeys>subPath] = subValue
             continue
           }
-          subResult[<SubKeys>subPath] = await applyTransformer(subTransformer, subValue, context)
+          subResult[<SubKeys>subPath] = subTransformer(subValue, context)
         }
         result[path] = subResult
         continue
@@ -115,14 +95,14 @@ async function test() {
   }
   const result = await usingTransformer(transformer, {})(input)
   type Result = {
-    title: UsingTransformerElement
+    title: TransformerReturn
     content: {
-      text: UsingTransformerElement
-      html: UsingTransformerElement
+      text: TransformerReturn
+      html: TransformerReturn
     }
-    nestTransformer: UsingTransformerElement
+    nestTransformer: TransformerReturn
     nestData: {
-      test: UsingTransformerElement
+      test: TransformerReturn
     }
   }
   return result satisfies Result

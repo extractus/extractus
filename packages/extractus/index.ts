@@ -1,17 +1,17 @@
 import type { ParseHtmlOptions } from '@extractus/utils/parse-html.js'
 import { extractors } from '@extractus/defaults/extractors.js'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
-import { usingExtractors } from './using-extractors.js'
+import usingExtractors from './using-extractors.js'
 import transformer from '@extractus/defaults/transformer.js'
 import usingTransformer from './using-transformer.js'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
 import type { OptionalContextProcessor } from '@extractus/utils/optional-context-processor.js'
 import usingSelector from './using-selector.js'
 import selector from '@extractus/defaults/selector.js'
-import { debug, DEBUG } from './logger.js'
+import { debug, debugNestedIterable } from './logger.js'
 import type { SetNonNullable, Spread } from 'type-fest'
 import filterUndefined from './filter-undefined.js'
-import arrayResultToAsyncIterable from '@extractus/utils/array-result-to-async-iterable.js'
+import { pipeAsync } from 'extra-utils'
 
 export type Extractor = OptionalContextProcessor
 export type Extractors = NestableRecord<Extractor>
@@ -23,7 +23,6 @@ export type TransformerReturn = ReturnType<Transformer>
 
 export type Selector<T> = OptionalContextProcessor<AsyncIterable<string>, Promise<T>>
 export type Selectors<T> = NestableRecord<Selector<T>>
-export type SelectorReturn<T> = ReturnType<Selector<T>>
 
 export interface ExtractOptions<Selected> {
   url?: string
@@ -60,21 +59,23 @@ export async function extract<Options extends ExtractOptions<unknown>>(
     selector,
     ...options
   }
-  debug('options')(actualOptions)
+  debug('options', actualOptions)
   const context = {
     url: options?.url,
     language: options?.language
   } satisfies ExtractContext
-  let current = await usingExtractors(actualOptions.extractors, context)(input)
-  debug('extracted')(current)
-  if (DEBUG) current = await arrayResultToAsyncIterable(current)
-  current = await usingTransformer(actualOptions.transformer, context)(current)
-  debug('transformed')(current)
-  if (DEBUG) current = await arrayResultToAsyncIterable(current)
-  current = await filterUndefined(current)
-  debug('filtered')(current)
-  if (DEBUG) current = await arrayResultToAsyncIterable(current)
-  current = await usingSelector(actualOptions.selector, context)(current)
-  debug('selected')(current)
-  return current
+
+  return await pipeAsync(
+    pipeAsync(
+      input,
+      usingExtractors(actualOptions.extractors, context),
+      (it) => debugNestedIterable('extracted', it),
+      usingTransformer(actualOptions.transformer, context),
+      (it) => debugNestedIterable('transformed', it),
+      (it) => filterUndefined(it),
+      (it) => debugNestedIterable('filtered', it),
+      usingSelector(actualOptions.selector, context)
+    ),
+    (it) => debug('selected', it)
+  )
 }

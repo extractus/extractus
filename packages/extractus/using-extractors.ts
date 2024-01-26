@@ -1,18 +1,8 @@
 import type { Extractor, ExtractorReturn, Extractors } from './index.js'
-import { mapAsync, toArrayAsync } from 'iterable-operator'
+import { mapAsync } from 'iterable-operator'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
 import { isFunction } from 'extra-utils'
-import { DEBUG } from './logger.js'
 import { deepMergeAsync } from '@extractus/utils/deep-merge.js'
-import type { IterableElement } from 'type-fest'
-
-const applyExtractor = async (extractor: Extractor, input: string, context: ExtractContext) => {
-  const extracted = extractor(input, context)
-  if (DEBUG) {
-    return await toArrayAsync(extracted)
-  }
-  return extracted
-}
 
 type ApplyExtractorResult<TExtractor extends Extractors> = {
   [K in keyof TExtractor]: TExtractor[K] extends Extractor
@@ -22,8 +12,6 @@ type ApplyExtractorResult<TExtractor extends Extractors> = {
       }
 }
 
-type UsingExtractorElement = ExtractorReturn | Array<IterableElement<ExtractorReturn>>
-
 async function applyExtractors<TExtractor extends Extractors>(
   input: string,
   extractors: TExtractor,
@@ -32,26 +20,26 @@ async function applyExtractors<TExtractor extends Extractors>(
   type Result = {
     [K in keyof TExtractor]:
       | {
-          [SK in keyof TExtractor[K]]: UsingExtractorElement
+          [SK in keyof TExtractor[K]]: ExtractorReturn
         }
-      | UsingExtractorElement
+      | ExtractorReturn
   }
   const result = <Result>{}
   for (const path in extractors) {
     const extractorOrNested = extractors[path]
     const isExtractor = isFunction(extractorOrNested)
     if (isExtractor) {
-      result[path] = await applyExtractor(extractorOrNested, input, context)
+      result[path] = extractorOrNested(input, context)
       continue
     }
     const subResult = <
       {
-        [K in keyof TExtractor[typeof path]]: UsingExtractorElement
+        [K in keyof TExtractor[typeof path]]: ExtractorReturn
       }
     >{}
     for (const subPath in extractorOrNested) {
       const subExtractor = extractorOrNested[subPath]!
-      subResult[subPath] = await applyExtractor(subExtractor, input, context)
+      subResult[subPath] = subExtractor(input, context)
     }
     result[path] = subResult
   }
@@ -60,21 +48,18 @@ async function applyExtractors<TExtractor extends Extractors>(
   return <ApplyExtractorResult<TExtractor>>result
 }
 
-export const usingExtractors =
+const usingExtractors =
   <TExtractor extends Extractors>(
     inputExtractors: Iterable<TExtractor> | AsyncIterable<TExtractor>,
     context: ExtractContext
   ) =>
-  (input: string) => {
+  async (input: string) => {
     const result = mapAsync(inputExtractors, async (extractors) =>
       applyExtractors(input, extractors, context)
     )
-    return deepMergeAsync(result)
-  }
 
-export type UsingExtractorsReturn<TExtractor extends Extractors> = ReturnType<
-  typeof usingExtractors<TExtractor>
->
+    return await deepMergeAsync(result)
+  }
 
 // noinspection JSUnusedLocalSymbols
 /**
