@@ -9,7 +9,7 @@ test('should extract from html', async (t) => {
     path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), 'test/meta-test.html'),
     { encoding: 'utf8' }
   )
-  const result = extract(html)
+  const result = await extract(html)
   t.deepEqual(result, {
     author: {
       name: 'jsonld',

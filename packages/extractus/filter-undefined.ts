@@ -24,7 +24,7 @@ const filterUndefined = async <Input extends NestableRecord<TransformerReturn>>(
   for (const path in input) {
     const values = input[path]
     if (isAsyncIterable<IterableElement<TransformerReturn>>(values)) {
-      result[path] = await applyFilter(values)
+      if (values) result[path] = await applyFilter(values)
       continue
     }
     const subResult = <
@@ -33,8 +33,8 @@ const filterUndefined = async <Input extends NestableRecord<TransformerReturn>>(
       }
     >{}
     for (const subPath in values) {
-      const subValues = values[subPath]!
-      subResult[subPath] = await applyFilter(subValues)
+      const subValues = values[subPath]
+      if (subValues) subResult[subPath] = await applyFilter(subValues)
     }
     result[path] = subResult
   }

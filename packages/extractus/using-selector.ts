@@ -40,7 +40,7 @@ function usingSelector<TSelectors extends Selectors<T>, T>(
         for (const subPath in values) {
           const subValue = values[subPath]!
           const subSelector = isSelector ? undefined : selector[subPath]
-          const actualSelector = !isSelector ?? !subSelector ? defaultSelector : subSelector
+          const actualSelector = subSelector ?? defaultSelector
           subResult[<keyof Input[typeof path]>subPath] = await actualSelector(subValue, context)
           if (!subResult[<keyof Input[typeof path]>subPath])
             delete subResult[<keyof Input[typeof path]>subPath]
