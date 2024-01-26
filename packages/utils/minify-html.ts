@@ -34,6 +34,7 @@ export default (html: string, options?: MinifyHtmlOptions) =>
   decoder.decode(
     minify(encoder.encode(html), {
       keep_html_and_head_opening_tags: true,
+      ensure_spec_compliant_unquoted_attribute_values: true,
       ...options
     })
   )
