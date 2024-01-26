@@ -1,7 +1,7 @@
-import type { DeepMerged } from '@extractus/utils/deep-merge.js'
-import type { IterableElement } from 'type-fest'
+import type { IterableElement, KeysOfUnion } from 'type-fest'
 import type { Extractor, Extractors } from '@extractus/extractus'
 import { map } from 'iterable-operator'
+import type { GetValue } from '@extractus/utils/get-value.js'
 
 export const extractors = map(
   <const>[
@@ -16,7 +16,15 @@ export const extractors = map(
   (it) => it.default
 ) satisfies Iterable<Extractors>
 
-export type DefaultExtractors = DeepMerged<IterableElement<typeof extractors>>
+type DefaultExtractors = IterableElement<typeof extractors>
+
+export type DefaultExtracted = {
+  [K in KeysOfUnion<DefaultExtractors>]: GetValue<DefaultExtractors, K> extends Extractor
+    ? Extractor
+    : {
+        [SK in KeysOfUnion<GetValue<DefaultExtractors, K>>]: Extractor
+      }
+}
 
 export type RequiredExtracted = {
   title: Extractor
