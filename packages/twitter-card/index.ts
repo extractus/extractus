@@ -1,5 +1,5 @@
+import type { Extractors } from '@extractus/utils/extractus.js'
 import parseHtml from '@extractus/utils/parse-html.js'
-import type { Extractors } from '@extractus/extractus'
 
 /**
  * https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup

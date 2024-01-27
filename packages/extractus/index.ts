@@ -1,32 +1,25 @@
-import type { ParseHtmlOptions } from '@extractus/utils/parse-html.js'
 import type { DefaultExtracted } from '@extractus/defaults/extractors.js'
 import { extractors } from '@extractus/defaults/extractors.js'
-import type { NestableRecord } from '@extractus/utils/nestable-record.js'
-import usingExtractors from './using-extractors.js'
-import transformer from '@extractus/defaults/transformer.js'
-import usingTransformer from './using-transformer.js'
-import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import type { OptionalContextProcessor } from '@extractus/utils/optional-context-processor.js'
-import usingSelector from './using-selector.js'
 import selector from '@extractus/defaults/selector.js'
-import { debug, debugNestedIterable } from './logger.js'
-import type { IterableElement, SetNonNullable, Spread, ValueOf } from 'type-fest'
-import filterUndefined from './filter-undefined.js'
+import transformer from '@extractus/defaults/transformer.js'
+import type { DeepMerged } from '@extractus/utils/deep-merge.js'
+import type { ExtractContext } from '@extractus/utils/extract-context.js'
+import type {
+  ExtractorReturn,
+  Extractors,
+  Selectors,
+  Transformers
+} from '@extractus/utils/extractus.js'
+import type { GetValue } from '@extractus/utils/get-value.js'
+import type { ParseHtmlOptions } from '@extractus/utils/parse-html.js'
 import { pipeAsync } from 'extra-utils'
 import { firstAsync, isntAsyncIterable, toAsyncIterable } from 'iterable-operator'
-import type { DeepMerged } from '@extractus/utils/deep-merge.js'
-import type { GetValue } from '@extractus/utils/get-value.js'
-
-export type Extractor = OptionalContextProcessor
-export type Extractors = NestableRecord<Extractor>
-export type ExtractorReturn = ReturnType<Extractor>
-
-export type Transformer = OptionalContextProcessor<ExtractorReturn>
-export type Transformers = NestableRecord<Transformer>
-export type TransformerReturn = ReturnType<Transformer>
-
-export type Selector<T> = OptionalContextProcessor<AsyncIterable<string>, Promise<T>>
-export type Selectors<T> = NestableRecord<Selector<T>>
+import type { IterableElement, SetNonNullable, Spread, ValueOf } from 'type-fest'
+import filterUndefined from './filter-undefined.js'
+import { debug, debugNestedIterable } from './logger.js'
+import usingExtractors from './using-extractors.js'
+import usingSelector from './using-selector.js'
+import usingTransformer from './using-transformer.js'
 
 export interface ExtractOptions<Selected> {
   url?: string
@@ -63,7 +56,7 @@ export async function extract<Options extends ExtractOptions<unknown>>(
     selector,
     ...options
   }
-  debug('options', actualOptions)
+  await debug('options', actualOptions)
   const context = {
     url: options?.url,
     language: options?.language
@@ -108,7 +101,7 @@ export async function extract<Options extends ExtractOptions<unknown>>(
       usingSelector(actualOptions.selector, context)
     ),
     // pipeAsync max operators is 7
-    (it) => debug('selected', it)
+    async (it) => await debug('selected', it)
   )
 }
 
@@ -182,7 +175,7 @@ async function test() {
  */
 // @ts-expect-error This function should be shaken off by esbuild
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function test() {
+async function testWithoutOptions() {
   const input = ''
   const result = await extract(input)
   type Result = {

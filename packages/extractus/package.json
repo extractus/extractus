@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=\"--loader=ts-node/esm --experimental-wasm-modules\" ava",
-    "test:coverage": "c8 ava"
+    "build": "tsx esbuild.ts",
+    "test": "ava --config ../../ava.config.js",
+    "test:coverage": "c8 -c ../../.c8rc.json npm test"
   },
   "keywords": [],
   "author": "SettingDust",
@@ -23,6 +24,9 @@
     "type-fest": "^4.8.3"
   },
   "devDependencies": {
-    "@types/object-inspect": "^1.8.4"
+    "@types/object-inspect": "^1.8.4",
+    "esbuild-node-externals": "^1.12.0",
+    "esbuild-plugin-polyfill-node": "^0.3.0",
+    "esbuild-plugin-wasm": "^1.1.0"
   }
 }

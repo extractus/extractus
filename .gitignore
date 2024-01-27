@@ -4,3 +4,6 @@ node_modules
 !.idea/codeStyles
 
 coverage
+dist
+
+.nx/cache

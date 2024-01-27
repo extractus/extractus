@@ -4,15 +4,10 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "test": "cross-env NODE_OPTIONS=\"--loader=ts-node/esm --experimental-wasm-modules\" ava",
-    "test:coverage": "c8 ava"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@extractus/extractus": "link:..\\extractus",
     "@extractus/generic": "link:..\\generic",
     "@extractus/link-tag": "link:..\\link-tag",
     "@extractus/meta-tags": "link:..\\meta-tags",

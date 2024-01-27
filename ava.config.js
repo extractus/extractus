@@ -1,5 +1,5 @@
 export default {
-  files: ['packages/**/*.spec.ts'],
+  files: ['**/*.spec.ts'],
   extensions: {
     ts: 'module'
   }

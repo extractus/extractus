@@ -1,6 +1,6 @@
+import parseHtml from '@extractus/utils/parse-html.js'
 import test from 'ava'
 import attributeSelector from './index.js'
-import parseHtml from '@extractus/utils/parse-html.js'
 
 let document: Document
 

@@ -1,4 +1,4 @@
-import type { ExtractorReturn, Transformers } from '@extractus/extractus'
+
 import isStringAndNotBlank from '@extractus/utils/is-string-and-not-blank.js'
 import condenseWhitespace from 'condense-whitespace'
 import splitTitle from '@extractus/utils/split-title.js'
@@ -9,6 +9,7 @@ import isAbsoluteUrl from 'is-absolute-url'
 import isURI from '@stdlib/assert-is-uri'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
 import { pipe } from 'extra-utils'
+import type { ExtractorReturn, Transformers } from '@extractus/utils/extractus.js'
 
 /**
  * @package

@@ -1,6 +1,6 @@
 import test from 'ava'
-import parseHtml from './parse-html.js'
 import absoluteElements from './absolute-elements.js'
+import parseHtml from './parse-html.js'
 
 test('should absolute href when target is a tag', async (t) => {
   const document = await parseHtml(`

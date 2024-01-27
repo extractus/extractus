@@ -3,9 +3,9 @@ import chalk from 'chalk'
 import logPrefix from 'loglevel-plugin-prefix'
 import objectInspect from 'object-inspect'
 import nestedAsyncIterableToArray from '@extractus/utils/nested-async-iterable-to-array.js'
-import { NestableRecord } from '@extractus/utils/nestable-record.js'
+import type { NestableRecord } from '@extractus/utils/nestable-record.js'
 import nestedArrayToAsyncIterable from '@extractus/utils/nested-array-to-async-iterable.js'
-import { Optional } from '@extractus/utils/optional.js'
+import type { Optional } from '@extractus/utils/optional.js'
 
 export const DEBUG = Boolean(process?.env?.['DEBUG'])
 
@@ -27,21 +27,25 @@ logPrefix.apply(log, {
 
 if (DEBUG) log.setLevel('debug')
 
-let inspectExist = false
-try {
-  const inspect = await import('node:util').then((it) => it.inspect)
-  inspectExist = true
-  inspect.defaultOptions = {
-    ...inspect.defaultOptions,
-    depth: 3
+let inspectExist: boolean | undefined
+
+async function findNodeInspect() {
+  try {
+    const { inspect } = await import('node:util')
+    inspectExist = true
+    inspect.defaultOptions = {
+      ...inspect.defaultOptions,
+      depth: 3
+    }
+  } catch {
+    /* empty */
   }
-} catch {
-  /* empty */
 }
 
 export { default } from 'loglevel'
-export const debug = <T>(prefix: string, it: T) => {
+export const debug = async <T>(prefix: string, it: T) => {
   if (DEBUG) {
+    if (inspectExist === undefined) await findNodeInspect()
     log.debug(prefix, inspectExist ? it : objectInspect(it, { indent: 2 }))
   }
   return it
@@ -55,7 +59,7 @@ export const debugNestedIterable = async <
 ) => {
   if (DEBUG) {
     const result = await nestedAsyncIterableToArray(it)
-    debug(prefix, result)
+    await debug(prefix, result)
     return await nestedArrayToAsyncIterable(result)
   }
   return it

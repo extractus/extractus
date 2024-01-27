@@ -1,9 +1,9 @@
-import type { Selectors, TransformerReturn } from './index.js'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import { firstAsync, isAsyncIterable, toAsyncIterable } from 'iterable-operator'
+import type { Selectors, TransformerReturn } from '@extractus/utils/extractus.js'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
-import type { IterableElement } from 'type-fest'
 import { isFunction, isntEmptyObject, isObject } from 'extra-utils'
+import { firstAsync, isAsyncIterable, toAsyncIterable } from 'iterable-operator'
+import type { IterableElement } from 'type-fest'
 
 const defaultSelector = (input: AsyncIterable<string>) => <Promise<string>>firstAsync(input)
 

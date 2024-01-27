@@ -5,14 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=\"--loader=ts-node/esm --experimental-wasm-modules\" ava",
-    "test:coverage": "c8 ava"
+    "test": "ava --config ../../ava.config.js",
+    "test:coverage": "c8 -c ../../.c8rc.json npm test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@extractus/extractus": "link:..\\extractus",
     "@extractus/utils": "link:..\\utils",
     "iterable-operator": "^4.0.6"
   }

@@ -1,9 +1,7 @@
 /**
  * Based on https://github.com/fastify/deepmerge
  */
-import type { EmptyObject, KeysOfUnion, ValueOf } from 'type-fest'
-import type { BuiltIns, UnknownRecord } from 'type-fest/source/internal.js'
-import type { GetValue } from './get-value.js'
+import { isArray, isntDate, isntRegExp, isObject } from 'extra-utils'
 import {
   concat,
   concatAsync,
@@ -13,7 +11,9 @@ import {
   mapAsync,
   toArray
 } from 'iterable-operator'
-import { isArray, isntDate, isntRegExp, isObject } from 'extra-utils'
+import type { EmptyObject, KeysOfUnion, ValueOf } from 'type-fest'
+import type { BuiltIns, UnknownRecord } from 'type-fest/source/internal.js'
+import type { GetValue } from './get-value.js'
 
 type DefaultIgnore =
   | BuiltIns

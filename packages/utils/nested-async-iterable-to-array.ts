@@ -1,9 +1,9 @@
-import type { NestableRecord } from './nestable-record.js'
 import { isAsyncIterable, toArrayAsync } from 'iterable-operator'
+import type { NestableRecord } from './nestable-record.js'
 import type { Optional } from './optional.js'
 
 const nestedAsyncIterableToArray = async <
-  Input extends NestableRecord<AsyncIterable<Optional<unknown>>>
+  Input extends NestableRecord<Optional<AsyncIterable<Optional<unknown>>>>
 >(
   input: Input
 ) => {

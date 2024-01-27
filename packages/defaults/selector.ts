@@ -1,6 +1,6 @@
-import { firstAsync, mapAsync } from 'iterable-operator'
-import type { Selectors } from '@extractus/extractus'
+import type { Selectors } from '@extractus/utils/extractus.js'
 import { pipe } from 'extra-utils'
+import { firstAsync, mapAsync } from 'iterable-operator'
 
 /**
  * @package

@@ -1,20 +1,21 @@
-import type { IterableElement, KeysOfUnion } from 'type-fest'
-import type { Extractor, Extractors } from '@extractus/extractus'
-import { map } from 'iterable-operator'
+import type { Extractor, Extractors } from '@extractus/utils/extractus.js'
 import type { GetValue } from '@extractus/utils/get-value.js'
+import { mapAsync } from 'iterable-operator'
+import type { IterableElement, KeysOfUnion } from 'type-fest'
 
-export const extractors = map(
+export const extractors = mapAsync(
   <const>[
     // Using full path for esbuild compile
-    await import('@extractus/schema-org-jsonld/index.js'),
-    await import('@extractus/opengraph/index.js'),
-    await import('@extractus/twitter-card/index.js'),
-    await import('@extractus/meta-tags/index.js'),
-    await import('@extractus/link-tag/index.js'),
-    await import('@extractus/generic/index.js')
+    import('@extractus/schema-org-jsonld/index.js'),
+    import('@extractus/opengraph/index.js'),
+    import('@extractus/twitter-card/index.js'),
+    import('@extractus/meta-tags/index.js'),
+    import('@extractus/link-tag/index.js'),
+    import('@extractus/generic/index.js')
   ],
-  (it) => it.default
-) satisfies Iterable<Extractors>
+  // eslint-disable-next-line unicorn/no-await-expression-member
+  (it) => it.then((it) => it.default)
+) satisfies AsyncIterable<Extractors>
 
 type DefaultExtractors = IterableElement<typeof extractors>
 

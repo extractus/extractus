@@ -1,8 +1,8 @@
+import { pipe } from 'extra-utils'
 import type sanitize from 'sanitize-html'
+import memoize from './memoize.js'
 import type { MinifyHtmlOptions } from './minify-html.js'
 import minifyHtml from './minify-html.js'
-import memoize from './memoize.js'
-import { pipe } from 'extra-utils'
 
 export interface ParseHtmlOptions {
   sanitize: sanitize.IOptions
@@ -14,7 +14,7 @@ export default memoize(
     const html = pipe(
       input,
       // https://github.com/extractus/extractus/issues/8
-      () => minifyHtml(input, options?.minify),
+      // () => minifyHtml(input, options?.minify),
       // () => sanitizeHtml(input, options?.sanitize)
       (input) => input
     )

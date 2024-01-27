@@ -1,7 +1,7 @@
-import parseJson from './parse-json.js'
-import parseHtml from './parse-html.js'
-import memoize from './memoize.js'
 import type { UnknownRecord } from 'type-fest/source/internal.js'
+import memoize from './memoize.js'
+import parseHtml from './parse-html.js'
+import parseJson from './parse-json.js'
 
 export default memoize(
   async function <T extends UnknownRecord = UnknownRecord>(input: string) {

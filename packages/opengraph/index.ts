@@ -1,5 +1,5 @@
+import type { Extractors } from '@extractus/utils/extractus.js'
 import parseHtml from '@extractus/utils/parse-html.js'
-import type { Extractors } from '@extractus/extractus'
 import { mapAsync } from 'iterable-operator'
 
 /**

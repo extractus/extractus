@@ -1,9 +1,13 @@
-import type { ExtractorReturn, TransformerReturn, Transformers } from './index.js'
 import type { ExtractContext } from '@extractus/utils/extract-context.js'
+import type {
+  ExtractorReturn,
+  TransformerReturn,
+  Transformers
+} from '@extractus/utils/extractus.js'
+import type { NestableRecord } from '@extractus/utils/nestable-record.js'
+import { isFunction, isObject } from 'extra-utils'
 import { isAsyncIterable, isntAsyncIterable, toAsyncIterable } from 'iterable-operator'
 import type { ValueOf } from 'type-fest'
-import { isFunction, isObject } from 'extra-utils'
-import type { NestableRecord } from '@extractus/utils/nestable-record.js'
 
 const usingTransformer =
   <TTransformers extends Transformers>(transformers: TTransformers, context: ExtractContext) =>

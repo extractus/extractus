@@ -1,10 +1,10 @@
-import mpath from 'mpath'
 import isDigitString from '@stdlib/assert-is-digit-string'
-import type { Get } from 'type-fest'
-import type { ParseNumber } from './parse-number.js'
-import type { Optional } from './optional.js'
 import { isArray, isntArray } from 'extra-utils'
+import mpath from 'mpath'
+import type { Get } from 'type-fest'
 import memoize from './memoize.js'
+import type { Optional } from './optional.js'
+import type { ParseNumber } from './parse-number.js'
 
 type Path = string | Array<string | number>
 

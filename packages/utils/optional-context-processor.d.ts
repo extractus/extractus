@@ -1,5 +1,5 @@
-import type { Optional } from './optional'
 import type { ExtractContext } from './extract-context'
+import type { Optional } from './optional'
 
 export type OptionalContextProcessor<
   ValueType = string,

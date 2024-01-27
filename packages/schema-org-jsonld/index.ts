@@ -1,12 +1,14 @@
-import type { Extractors } from '@extractus/extractus'
 import extractJsonldFromHtml from '@extractus/utils/extract-jsonld-from-html.js'
+import type { Extractors } from '@extractus/utils/extractus.js'
 import findValueFromJsonld from '@extractus/utils/find-value-from-jsonld.js'
 
 const NOT_RATING = (it: unknown) =>
   Boolean(
     it &&
       typeof it === 'object' &&
-      ['EndorsementRating', 'AggregateRating', 'Rating'].includes(<string>(<Record<string, unknown>>it)['@type'])
+      ['EndorsementRating', 'AggregateRating', 'Rating'].includes(
+        <string>(<Record<string, unknown>>it)['@type']
+      )
   )
 const IS_CREATIVE_WORK = (it: unknown) => Boolean(!it || (typeof it === 'object' && !('headline' in it)))
 

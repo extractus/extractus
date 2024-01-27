@@ -1,8 +1,8 @@
-import type { Extractor, ExtractorReturn, Extractors } from './index.js'
-import { mapAsync } from 'iterable-operator'
-import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import { isFunction } from 'extra-utils'
 import { deepMergeAsync } from '@extractus/utils/deep-merge.js'
+import type { ExtractContext } from '@extractus/utils/extract-context.js'
+import type { Extractor, ExtractorReturn, Extractors } from '@extractus/utils/extractus.js'
+import { isFunction } from 'extra-utils'
+import { mapAsync } from 'iterable-operator'
 
 type ApplyExtractorResult<TExtractor extends Extractors> = {
   [K in keyof TExtractor]: TExtractor[K] extends Extractor

@@ -1,5 +1,5 @@
+import type { Extractors } from '@extractus/utils/extractus.js'
 import parseHtml from '@extractus/utils/parse-html.js'
-import type { Extractors } from '@extractus/extractus'
 import { mapAsync } from 'iterable-operator'
 
 /**
@@ -10,6 +10,6 @@ export default {
   url: (input: string) =>
     mapAsync(['link[rel="canonical"]', 'link[rel="alternate"]'], async (it) => {
       const document = await parseHtml(input)
-      document.querySelector(it)?.getAttribute('href')
+      return document.querySelector(it)?.getAttribute('href')
     })
 } satisfies Extractors

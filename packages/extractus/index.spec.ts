@@ -1,8 +1,8 @@
 import test from 'ava'
 import * as fs from 'node:fs/promises'
-import { extract } from './index.js'
 import * as path from 'node:path'
 import * as url from 'node:url'
+import { extract } from './index.js'
 
 test('should extract from html', async (t) => {
   const html = await fs.readFile(

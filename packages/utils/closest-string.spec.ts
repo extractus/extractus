@@ -1,5 +1,5 @@
-import closestString from './closest-string.js'
 import test from 'ava'
+import closestString from './closest-string.js'
 
 test('should return the closest string', (t) => {
   t.deepEqual(closestString('foo', 'bar', 'baz', 'fooz'), {

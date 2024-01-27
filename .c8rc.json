@@ -1,6 +1,6 @@
 {
   "include": [
-    "packages/**/*.ts"
+    "**/*.ts"
   ],
   "exclude": [
     "**/*.spec.ts"
