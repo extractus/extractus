@@ -30,6 +30,7 @@ await build({
     })
   ]
 })
+console.log()
 
 console.log('Building esm')
 await build({
@@ -39,6 +40,7 @@ await build({
   mainFields: ['module', 'main'],
   conditions: ['import', 'default']
 })
+console.log()
 
 console.log('Building esm bundle')
 await build({
@@ -48,6 +50,7 @@ await build({
   mainFields: ['module', 'main'],
   conditions: ['import', 'default']
 })
+console.log()
 
 console.log('Building browser')
 await build({
@@ -60,11 +63,10 @@ await build({
     })
   ]
 })
+console.log()
 
 console.log('Building browser bundle')
-
-
-await fs.writeFile('dist/meta.json',JSON.stringify((await build({
+await build({
   platform: 'browser',
   outfile: 'dist/extractus.browser.bundle.js',
   external: ['urlpattern-polyfill', 'linkedom'],
@@ -72,9 +74,9 @@ await fs.writeFile('dist/meta.json',JSON.stringify((await build({
     wasmLoader({
       mode: 'embedded'
     })
-  ],
-  metafile:true
-})).metafile))
+  ]
+})
+console.log()
 
 console.log('Building minified browser bundle')
 await build({
@@ -88,6 +90,7 @@ await build({
     })
   ]
 })
+console.log()
 
 console.log('Building node browser bundle')
 await build({
@@ -96,6 +99,19 @@ await build({
   plugins: [
     nodeExternalsPlugin({
       allowList: ['linkedom']
+    })
+  ]
+})
+console.log()
+
+console.log('Building deno')
+await build({
+  platform: 'neutral',
+  outfile: 'dist/mod.js',
+  plugins: [
+    polyfillNode(),
+    nodeExternalsPlugin({
+      allowWorkspaces: true
     })
   ]
 })
