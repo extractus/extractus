@@ -2,8 +2,8 @@
   "name": "workspace",
   "type": "module",
   "scripts": {
-    "test": "env-cmd test ava",
-    "test:coverage": "env-cmd test c8 npm test"
+    "test": "env-cmd -e test ava",
+    "test:coverage": "env-cmd -e test c8 npm test"
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^5.0.0",
