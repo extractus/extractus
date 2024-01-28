@@ -36,5 +36,11 @@
   },
   "dependencies": {
     "@swc/helpers": "~0.5.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss@<8.4.31": ">=8.4.31",
+      "semver@>=6.0.0 <6.3.1": ">=6.3.1"
+    }
   }
 }
