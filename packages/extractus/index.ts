@@ -11,7 +11,6 @@ import type {
   Transformers
 } from '@extractus/utils/extractus.js'
 import type { GetValue } from '@extractus/utils/get-value.js'
-import type { ParseHtmlOptions } from '@extractus/utils/parse-html.js'
 import { pipeAsync } from 'extra-utils'
 import { firstAsync, isntAsyncIterable, toAsyncIterable } from 'iterable-operator'
 import type { IterableElement, SetNonNullable, Spread, ValueOf } from 'type-fest'
@@ -24,7 +23,8 @@ import usingTransformer from './using-transformer.js'
 export interface ExtractOptions<Selected> {
   url?: string
   language?: string
-  parse?: ParseHtmlOptions
+  // Disable for now
+  // parse?: ParseHtmlOptions
   extractors?: Iterable<Extractors>
   transformer?: Transformers
   selector?: Selectors<Selected>
@@ -54,6 +54,7 @@ export async function extract<Options extends ExtractOptions<unknown>>(
     extractors,
     transformer,
     selector,
+    parse: {},
     ...options
   }
   await debug('options', actualOptions)
