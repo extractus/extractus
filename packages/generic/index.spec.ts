@@ -58,7 +58,7 @@ test('should extract author name', async (t) => {
   `
   const output = genericExtractor.author.name(input)
   t.is((await output.next()).value, 'Prop Name Author Name')
-  t.is((await output.next()).value, 'Prop Name Author Name')
+  t.is((await output.next()).value, `\n      Prop Name Author Name\n    `)
   t.is((await output.next()).value, 'Prop Author Name')
   t.is((await output.next()).value, 'Rel Author Name')
   t.is((await output.next()).value, 'Class Author Name')

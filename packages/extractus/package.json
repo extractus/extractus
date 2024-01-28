@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsx esbuild.ts",
-    "test": "ava --config ../../ava.config.js",
-    "test:coverage": "c8 -c ../../.c8rc.json npm test"
+    "test": "env-cmd -r ../../.env-cmdrc -e test ava --config ../../ava.config.js",
+    "test:coverage": "env-cmd -r ../../.env-cmdrc -e test c8 -c ../../.c8rc.json npm test"
   },
   "keywords": [],
   "author": "SettingDust",

@@ -25,4 +25,4 @@ jobs:
         run: pnpm install
 
       - name:  Test
-        run: npx nx run test:workspace
+        run: pnpm run test
