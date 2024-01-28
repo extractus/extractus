@@ -13,8 +13,7 @@ export const extractors = mapAsync(
     import('@extractus/link-tag/index.js'),
     import('@extractus/generic/index.js')
   ],
-  // eslint-disable-next-line unicorn/no-await-expression-member
-  (it) => it.then((it) => it.default)
+  (it) => it.default
 ) satisfies AsyncIterable<Extractors>
 
 type DefaultExtractors = IterableElement<typeof extractors>
