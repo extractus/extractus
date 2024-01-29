@@ -11,6 +11,7 @@ import type {
   Transformers
 } from '@extractus/utils/extractus.js'
 import type { GetValue } from '@extractus/utils/get-value.js'
+import parseHtml from '@extractus/utils/parse-html.js'
 import { pipeAsync } from 'extra-utils'
 import { firstAsync, isntAsyncIterable, toAsyncIterable } from 'iterable-operator'
 import type { IterableElement, SetNonNullable, Spread, ValueOf } from 'type-fest'
@@ -28,6 +29,16 @@ export interface ExtractOptions<Selected> {
   extractors?: Iterable<Extractors>
   transformer?: Transformers
   selector?: Selectors<Selected>
+}
+
+export default {
+  /**
+   * Since it's a memozied function you can inject cache into it.
+   * So that you can specify {@link Document} object be used instead of parsing
+   * @see https://github.com/extractus/extractus/blob/main/packages/utils/parse-html.ts
+   * @see https://github.com/planttheidea/micro-memoize#memoizedcache
+   */
+  parseHtml
 }
 
 /**

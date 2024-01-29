@@ -15,7 +15,6 @@ export let defaultOptions: ParseHtmlOptions = {
   }
 }
 
-
 export default memoize(
   // @ts-expect-error Options not using, see below
   async (input: string, options: ParseHtmlOptions = defaultOptions) => {

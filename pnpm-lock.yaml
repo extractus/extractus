@@ -163,6 +163,9 @@ importers:
       loglevel-plugin-prefix:
         specifier: ^0.8.4
         version: 0.8.4
+      micro-memoize:
+        specifier: ^4.1.2
+        version: 4.1.2
       object-inspect:
         specifier: ^1.13.1
         version: 1.13.1
