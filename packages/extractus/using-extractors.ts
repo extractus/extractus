@@ -61,40 +61,4 @@ const usingExtractors =
     return await deepMergeAsync(result)
   }
 
-// noinspection JSUnusedLocalSymbols
-/**
- * For test the dynamic return type by input extractors
- */
-// @ts-expect-error This function should be shaken off by esbuild
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function test() {
-  const extractors = {
-    title: async function* (input: string) {
-      yield input
-    },
-    content: {
-      text: async function* (input: string) {
-        yield input
-      },
-      html: async function* (input: string) {
-        yield input
-      }
-    }
-  } as const
-  const context = {
-    url: 'https://example.com',
-    language: 'en'
-  } as const
-  const input = ''
-  const result = await usingExtractors([extractors], context)(input)
-  type Result = {
-    title: ExtractorReturn
-    content: {
-      text: ExtractorReturn
-      html: ExtractorReturn
-    }
-  }
-  return result satisfies Result
-}
-
 export default usingExtractors

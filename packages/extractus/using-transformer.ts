@@ -6,7 +6,7 @@ import type {
 } from '@extractus/utils/extractus.js'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
 import { isFunction, isObject } from 'extra-utils'
-import { isAsyncIterable, isntAsyncIterable, toAsyncIterable } from 'iterable-operator'
+import { isAsyncIterable } from 'iterable-operator'
 import type { ValueOf } from 'type-fest'
 
 const usingTransformer =
@@ -66,50 +66,5 @@ const usingTransformer =
       }
     >result
   }
-
-// noinspection JSUnusedLocalSymbols
-/**
- * For test the dynamic return type by input transformer
- */
-// @ts-expect-error This function should be shaken off by esbuild
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function test() {
-  const transformer = {
-    title: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input),
-    content: {
-      text: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input),
-      html: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input)
-    },
-    nestTransformer: {
-      test: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input)
-    },
-    nestData: (input: ExtractorReturn) =>
-      isntAsyncIterable(input) ? toAsyncIterable(input) : input
-  } satisfies Transformers
-  const input = {
-    title: toAsyncIterable(['data']),
-    content: {
-      text: toAsyncIterable(['data']),
-      html: toAsyncIterable(['data'])
-    },
-    nestTransformer: toAsyncIterable(['data']),
-    nestData: {
-      test: toAsyncIterable(['data'])
-    }
-  }
-  const result = await usingTransformer(transformer, {})(input)
-  type Result = {
-    title: TransformerReturn
-    content: {
-      text: TransformerReturn
-      html: TransformerReturn
-    }
-    nestTransformer: TransformerReturn
-    nestData: {
-      test: TransformerReturn
-    }
-  }
-  return result satisfies Result
-}
 
 export default usingTransformer

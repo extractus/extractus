@@ -2,7 +2,7 @@ import type { ExtractContext } from '@extractus/utils/extract-context.js'
 import type { Selectors, TransformerReturn } from '@extractus/utils/extractus.js'
 import type { NestableRecord } from '@extractus/utils/nestable-record.js'
 import { isFunction, isntEmptyObject, isObject } from 'extra-utils'
-import { firstAsync, isAsyncIterable, toAsyncIterable } from 'iterable-operator'
+import { firstAsync, isAsyncIterable } from 'iterable-operator'
 import type { IterableElement } from 'type-fest'
 
 const defaultSelector = (input: AsyncIterable<string>) => <Promise<string>>firstAsync(input)
@@ -74,36 +74,6 @@ function usingSelector<TSelectors extends Selectors<T>, T>(
       }
     >result
   }
-}
-
-// noinspection JSUnusedLocalSymbols
-/**
- * For test the dynamic return type by input selector
- */
-// @ts-expect-error This function should be shaken off by esbuild
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function test() {
-  const selector = {
-    title: (input: AsyncIterable<string>) => <Promise<string>>firstAsync(input),
-    content: {
-      text: (input: AsyncIterable<string>) => <Promise<string>>firstAsync(input)
-    }
-  } as const satisfies Selectors<string>
-  const input = {
-    title: toAsyncIterable(['title']),
-    content: {
-      text: toAsyncIterable(['text'])
-    }
-  }
-  type Result = {
-    title: string
-    content: {
-      text: string
-    }
-  }
-  const selectors = usingSelector(selector, {})
-  const result = await selectors(input)
-  return result satisfies Result
 }
 
 export default usingSelector
