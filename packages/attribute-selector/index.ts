@@ -1,4 +1,4 @@
-import isStringAndNotBlank from '@extractus/utils/is-string-and-not-blank.js'
+import { isStringAndNotBlank } from '@extractus/utils'
 
 const _providers = <const>{
   text: <T extends HTMLElement>(element: T) => element.textContent,

@@ -1,5 +1,5 @@
-import type { Extractors } from '@extractus/utils/extractus.js'
-import parseHtml from '@extractus/utils/parse-html.js'
+import type { Extractors } from '@extractus/utils'
+import { parseHtml } from '@extractus/utils'
 import { flatMapAsync, mapAsync } from 'iterable-operator'
 
 // Some itemprop is from https://schema.org/. Should be split into another extractor

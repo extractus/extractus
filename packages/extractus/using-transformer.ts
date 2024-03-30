@@ -1,10 +1,10 @@
-import type { ExtractContext } from '@extractus/utils/extract-context.js'
 import type {
+  ExtractContext,
   ExtractorReturn,
+  NestableRecord,
   TransformerReturn,
   Transformers
-} from '@extractus/utils/extractus.js'
-import type { NestableRecord } from '@extractus/utils/nestable-record.js'
+} from '@extractus/utils'
 import { isFunction, isObject } from 'extra-utils'
 import { isAsyncIterable } from 'iterable-operator'
 import type { ValueOf } from 'type-fest'

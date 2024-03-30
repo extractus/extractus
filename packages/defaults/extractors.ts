@@ -1,5 +1,4 @@
-import type { Extractor, Extractors } from '@extractus/utils/extractus.js'
-import type { GetValue } from '@extractus/utils/get-value.js'
+import type { Extractor, Extractors, GetValue } from '@extractus/utils'
 import { mapAsync } from 'iterable-operator'
 import type { IterableElement, KeysOfUnion } from 'type-fest'
 

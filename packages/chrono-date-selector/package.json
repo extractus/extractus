@@ -1,0 +1,19 @@
+{
+  "name": "@extractus/chrono-date-selector",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "env-cmd -r ../../.env-cmdrc -e test ava --config ../../ava.config.js",
+    "test:coverage": "env-cmd -r ../../.env-cmdrc -e test c8 -c ../../.c8rc.json npm test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@extractus/utils": "link:..\\utils",
+    "chrono-node": "^2.7.5"
+  }
+}

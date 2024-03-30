@@ -1,5 +1,4 @@
-import type { TransformerReturn } from '@extractus/utils/extractus.js'
-import type { NestableRecord } from '@extractus/utils/nestable-record.js'
+import type { NestableRecord, TransformerReturn } from '@extractus/utils'
 import { filterAsync, isAsyncIterable } from 'iterable-operator'
 import type { IterableElement } from 'type-fest'
 

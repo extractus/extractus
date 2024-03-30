@@ -1,12 +1,7 @@
-import type {
-  ExtractorReturn,
-  Selectors,
-  TransformerReturn,
-  Transformers
-} from '@extractus/utils/extractus.js'
+import type { ExtractorReturn, Selectors, TransformerReturn, Transformers } from '@extractus/utils'
 import test from 'ava'
 import { pipeAsync } from 'extra-utils'
-import { firstAsync, isntAsyncIterable, toAsyncIterable } from 'iterable-operator'
+import { firstAsync, toAsyncIterable } from 'iterable-operator'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 import * as url from 'node:url'
@@ -54,16 +49,15 @@ async function testWithOptions() {
   } as const
 
   const transformer = {
-    title: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input),
+    title: (input: ExtractorReturn) => input,
     content: {
-      text: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input),
-      html: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input)
+      text: (input: ExtractorReturn) => input,
+      html: (input: ExtractorReturn) => input
     },
     nestTransformer: {
-      test: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input)
+      test: (input: ExtractorReturn) => input
     },
-    nestData: (input: ExtractorReturn) =>
-      isntAsyncIterable(input) ? toAsyncIterable(input) : input
+    nestData: (input: ExtractorReturn) => input
   } satisfies Transformers
 
   const selector = {
@@ -164,16 +158,15 @@ async function testUsingExtractors() {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function testUsingTransformer() {
   const transformer = {
-    title: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input),
+    title: (input: ExtractorReturn) => input,
     content: {
-      text: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input),
-      html: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input)
+      text: (input: ExtractorReturn) => input,
+      html: (input: ExtractorReturn) => input
     },
     nestTransformer: {
-      test: (input: ExtractorReturn) => (isntAsyncIterable(input) ? toAsyncIterable(input) : input)
+      test: (input: ExtractorReturn) => input
     },
-    nestData: (input: ExtractorReturn) =>
-      isntAsyncIterable(input) ? toAsyncIterable(input) : input
+    nestData: (input: ExtractorReturn) => input
   } satisfies Transformers
   const input = {
     title: toAsyncIterable(['data']),

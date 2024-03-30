@@ -1,12 +1,18 @@
 {
   "name": "@extractus/utils",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "pkgroll --src . --sourcemap",
     "test": "env-cmd -r ../../.env-cmdrc -e test ava --config ../../ava.config.js",
     "test:coverage": "env-cmd -r ../../.env-cmdrc -e test c8 -c ../../.c8rc.json npm test"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "default": "./dist/index.js"
+    }
   },
   "keywords": [],
   "author": "",
@@ -16,6 +22,7 @@
     "@minify-html/wasm": "^0.11.1",
     "@sindresorhus/is": "^5.6.0",
     "@stdlib/assert-is-digit-string": "^0.0.9",
+    "@types/sanitize-html": "^2.9.5",
     "extra-utils": "^5.5.2",
     "fastest-levenshtein": "^1.0.16",
     "happy-dom": "^13.3.1",
@@ -28,8 +35,5 @@
     "sanitize-html": "^2.11.0",
     "type-fest": "^4.8.3",
     "urlpattern-polyfill": "^9.0.0"
-  },
-  "devDependencies": {
-    "@types/sanitize-html": "^2.9.5"
   }
 }

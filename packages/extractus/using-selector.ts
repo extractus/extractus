@@ -1,6 +1,4 @@
-import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import type { Selectors, TransformerReturn } from '@extractus/utils/extractus.js'
-import type { NestableRecord } from '@extractus/utils/nestable-record.js'
+import type { ExtractContext, NestableRecord, Selectors, TransformerReturn } from '@extractus/utils'
 import { isFunction, isntEmptyObject, isObject } from 'extra-utils'
 import { firstAsync, isAsyncIterable } from 'iterable-operator'
 import type { IterableElement } from 'type-fest'

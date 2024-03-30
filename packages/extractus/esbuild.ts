@@ -1,9 +1,9 @@
-import { deepMerge } from '@extractus/utils/deep-merge.js'
+import { deepMerge } from '@extractus/utils'
 import { build as _build, type BuildOptions } from 'esbuild'
 import { nodeExternalsPlugin } from 'esbuild-node-externals'
-import * as fs from 'node:fs/promises'
 import { polyfillNode } from 'esbuild-plugin-polyfill-node'
 import { wasmLoader } from 'esbuild-plugin-wasm'
+import * as fs from 'node:fs/promises'
 
 const commonOptions = <BuildOptions>{
   entryPoints: ['index.ts'],

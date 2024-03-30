@@ -87,7 +87,7 @@ function cloneIterable<T extends Cloneable>(value: Iterable<T>): Cloned<Iterable
 function cloneAsyncIterable<T extends Cloneable>(
   value: AsyncIterable<T>
 ): Cloned<AsyncIterable<T>> {
-  const iterable = mapAsync(value, clone)
+  const iterable = mapAsync(value, clone) satisfies Cloned<typeof value>
   return iterable satisfies Cloned<typeof value>
 }
 

@@ -1,5 +1,5 @@
-import type { Extractors } from '@extractus/utils/extractus.js'
-import parseHtml from '@extractus/utils/parse-html.js'
+import type { Extractors } from '@extractus/utils'
+import { parseHtml } from '@extractus/utils'
 import { mapAsync } from 'iterable-operator'
 
 /**
@@ -20,7 +20,11 @@ export default {
   },
   image: (input: string) =>
     mapAsync(
-      ['meta[property="og:image:secure_url"]', 'meta[property="og:image:url"]', 'meta[property="og:image"]'],
+      [
+        'meta[property="og:image:secure_url"]',
+        'meta[property="og:image:url"]',
+        'meta[property="og:image"]'
+      ],
       async (it) => {
         const document = await parseHtml(input)
         return document.querySelector(it)?.getAttribute('content')
@@ -40,12 +44,16 @@ export default {
   date: {
     published: async function* (input: string) {
       const document = await parseHtml(input)
-      yield document.querySelector('meta[property="article:published_time"]')?.getAttribute('content')
+      yield document
+        .querySelector('meta[property="article:published_time"]')
+        ?.getAttribute('content')
       yield document.querySelector('meta[property*="release_date" i]')?.getAttribute('content')
     },
     modified: async function* (input: string) {
       const document = await parseHtml(input)
-      yield document.querySelector('meta[property="article:modified_time"]')?.getAttribute('content')
+      yield document
+        .querySelector('meta[property="article:modified_time"]')
+        ?.getAttribute('content')
     }
   }
 } satisfies Extractors

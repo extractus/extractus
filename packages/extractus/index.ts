@@ -2,10 +2,14 @@ import type { DefaultExtracted } from '@extractus/defaults/extractors.js'
 import { extractors } from '@extractus/defaults/extractors.js'
 import selector from '@extractus/defaults/selector.js'
 import transformer from '@extractus/defaults/transformer.js'
-import type { DeepMerged } from '@extractus/utils/deep-merge.js'
-import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import type { Extractors, Selectors, Transformers } from '@extractus/utils/extractus.js'
-import type { GetValue } from '@extractus/utils/get-value.js'
+import type {
+  DeepMerged,
+  ExtractContext,
+  Extractors,
+  GetValue,
+  Selectors,
+  Transformers
+} from '@extractus/utils'
 
 import { pipeAsync } from 'extra-utils'
 import type { IterableElement, SetNonNullable, Spread, ValueOf } from 'type-fest'
@@ -107,4 +111,4 @@ export async function extract<Options extends ExtractOptions<unknown>>(
  * @see https://github.com/extractus/extractus/blob/main/packages/utils/parse-html.ts
  * @see https://github.com/planttheidea/micro-memoize#memoizedcache
  */
-export { default as parseHtml } from '@extractus/utils/parse-html.js'
+export { default as parseHtml } from '@extractus/utils'

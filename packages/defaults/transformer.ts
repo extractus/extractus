@@ -1,15 +1,10 @@
-
-import isStringAndNotBlank from '@extractus/utils/is-string-and-not-blank.js'
-import condenseWhitespace from 'condense-whitespace'
-import splitTitle from '@extractus/utils/split-title.js'
-import { filterAsync, flatMapAsync, mapAsync } from 'iterable-operator'
-import normalizeUrl from '@extractus/utils/normalize-url.js'
-import resolveUrl from '@extractus/utils/resolve-url.js'
-import isAbsoluteUrl from 'is-absolute-url'
+import type { ExtractContext, ExtractorReturn, Transformers } from '@extractus/utils'
+import { isStringAndNotBlank, normalizeUrl, resolveUrl, splitTitle } from '@extractus/utils'
 import isURI from '@stdlib/assert-is-uri'
-import type { ExtractContext } from '@extractus/utils/extract-context.js'
+import condenseWhitespace from 'condense-whitespace'
 import { pipe } from 'extra-utils'
-import type { ExtractorReturn, Transformers } from '@extractus/utils/extractus.js'
+import isAbsoluteUrl from 'is-absolute-url'
+import { filterAsync, flatMapAsync, mapAsync } from 'iterable-operator'
 
 /**
  * @package

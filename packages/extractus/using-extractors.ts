@@ -1,6 +1,5 @@
-import { deepMergeAsync } from '@extractus/utils/deep-merge.js'
-import type { ExtractContext } from '@extractus/utils/extract-context.js'
-import type { Extractor, ExtractorReturn, Extractors } from '@extractus/utils/extractus.js'
+import type { ExtractContext, Extractor, ExtractorReturn, Extractors } from '@extractus/utils'
+import { deepMergeAsync } from '@extractus/utils'
 import { isFunction } from 'extra-utils'
 import { mapAsync } from 'iterable-operator'
 

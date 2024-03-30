@@ -1,6 +1,5 @@
-import extractJsonldFromHtml from '@extractus/utils/extract-jsonld-from-html.js'
-import type { Extractors } from '@extractus/utils/extractus.js'
-import findValueFromJsonld from '@extractus/utils/find-value-from-jsonld.js'
+import type { Extractors } from '@extractus/utils'
+import { extractJsonldFromHtml, findValueFromJsonld } from '@extractus/utils'
 
 const NOT_RATING = (it: unknown) =>
   Boolean(
@@ -10,7 +9,8 @@ const NOT_RATING = (it: unknown) =>
         <string>(<Record<string, unknown>>it)['@type']
       )
   )
-const IS_CREATIVE_WORK = (it: unknown) => Boolean(!it || (typeof it === 'object' && !('headline' in it)))
+const IS_CREATIVE_WORK = (it: unknown) =>
+  Boolean(!it || (typeof it === 'object' && !('headline' in it)))
 
 const extractJsonld = async (input: string, path: string, ignored?: (it: unknown) => boolean) =>
   findValueFromJsonld(await extractJsonldFromHtml(input), path, ignored)
