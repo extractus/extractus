@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "pkgroll --src . --sourcemap",
+    "build": "pkgroll --src .",
     "test": "env-cmd -r ../../.env-cmdrc -e test ava --config ../../ava.config.js",
     "test:coverage": "env-cmd -r ../../.env-cmdrc -e test c8 -c ../../.c8rc.json npm test"
   },

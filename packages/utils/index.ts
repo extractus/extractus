@@ -28,6 +28,12 @@ export { default as nestedAsyncIterableToArray } from './nested-async-iterable-t
 export { default as normalizeUrl } from './normalize-url.js'
 export type { Optional } from './optional.js'
 export type { OptionalContextProcessor } from './optional-context-processor.js'
+/**
+ * Since it's a memozied function you can inject cache into it.
+ * So that you can specify {@link Document} object be used instead of parsing
+ * @see https://github.com/extractus/extractus/blob/main/packages/utils/parse-html.ts
+ * @see https://github.com/planttheidea/micro-memoize#memoizedcache
+ */
 export { default as parseHtml } from './parse-html.js'
 export { default as parseJson } from './parse-json.js'
 export type { ParseNumber } from './parse-number.js'

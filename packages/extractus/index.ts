@@ -111,4 +111,4 @@ export async function extract<Options extends ExtractOptions<unknown>>(
  * @see https://github.com/extractus/extractus/blob/main/packages/utils/parse-html.ts
  * @see https://github.com/planttheidea/micro-memoize#memoizedcache
  */
-export { default as parseHtml } from '@extractus/utils'
+export { parseHtml } from '@extractus/utils'
