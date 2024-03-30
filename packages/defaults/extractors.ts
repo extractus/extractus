@@ -4,13 +4,12 @@ import type { IterableElement, KeysOfUnion } from 'type-fest'
 
 export const extractors = mapAsync(
   <const>[
-    // Using full path for esbuild compile
-    import('@extractus/schema-org-jsonld/index.js'),
-    import('@extractus/opengraph/index.js'),
-    import('@extractus/twitter-card/index.js'),
-    import('@extractus/meta-tags/index.js'),
-    import('@extractus/link-tag/index.js'),
-    import('@extractus/generic/index.js')
+    import('@extractus/schema-org-jsonld'),
+    import('@extractus/opengraph'),
+    import('@extractus/twitter-card'),
+    import('@extractus/meta-tags'),
+    import('@extractus/link-tag'),
+    import('@extractus/generic')
   ],
   (it) => it.default
 ) satisfies AsyncIterable<Extractors>
