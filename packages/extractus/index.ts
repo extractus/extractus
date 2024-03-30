@@ -1,7 +1,5 @@
-import type { DefaultExtracted } from '@extractus/defaults/extractors.js'
-import { extractors } from '@extractus/defaults/extractors.js'
-import selector from '@extractus/defaults/selector.js'
-import transformer from '@extractus/defaults/transformer.js'
+import type { DefaultExtracted } from '@extractus/defaults'
+import { extractors, selector, transformer } from '@extractus/defaults'
 import type {
   DeepMerged,
   ExtractContext,

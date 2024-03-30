@@ -7,6 +7,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "build": "pkgroll --src .",
+    "test": "env-cmd -r ../../.env-cmdrc -e test ava --config ../../ava.config.js",
+    "test:coverage": "env-cmd -r ../../.env-cmdrc -e test c8 -c ../../.c8rc.json npm test"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "dependencies": {
     "@extractus/generic": "link:..\\generic",
     "@extractus/link-tag": "link:..\\link-tag",
