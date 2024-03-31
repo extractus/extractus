@@ -15,6 +15,5 @@
   "dependencies": {
     "@extractus/utils": "^0.1.0",
     "chrono-node": "^2.7.5"
-  },
-  "gitHead": "b38c1848e0d267b8a49b2ffdb623df5361202a14"
+  }
 }

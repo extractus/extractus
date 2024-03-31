@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "@extractus/utils": "^0.1.0"
-  },
-  "gitHead": "b38c1848e0d267b8a49b2ffdb623df5361202a14"
+  },"publishConfig": {
+  "access": "public"
+}
 }

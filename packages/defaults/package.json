@@ -30,6 +30,5 @@
     "is-absolute-url": "^4.0.1",
     "iterable-operator": "^4.0.6",
     "type-fest": "^4.8.3"
-  },
-  "gitHead": "b38c1848e0d267b8a49b2ffdb623df5361202a14"
+  }
 }
