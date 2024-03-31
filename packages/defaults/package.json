@@ -17,18 +17,19 @@
     }
   },
   "dependencies": {
-    "@extractus/generic": "link:..\\generic",
-    "@extractus/link-tag": "link:..\\link-tag",
-    "@extractus/meta-tags": "link:..\\meta-tags",
-    "@extractus/opengraph": "link:..\\opengraph",
-    "@extractus/schema-org-jsonld": "link:..\\schema-org-jsonld",
-    "@extractus/twitter-card": "link:..\\twitter-card",
-    "@extractus/utils": "link:..\\utils",
+    "@extractus/generic": "^0.1.0",
+    "@extractus/link-tag": "^0.1.0",
+    "@extractus/meta-tags": "^0.1.0",
+    "@extractus/opengraph": "^0.1.0",
+    "@extractus/schema-org-jsonld": "^0.1.0",
+    "@extractus/twitter-card": "^0.1.0",
+    "@extractus/utils": "^0.1.0",
     "@stdlib/assert-is-uri": "^0.1.1",
     "condense-whitespace": "^3.0.0",
     "extra-utils": "^5.5.2",
     "is-absolute-url": "^4.0.1",
     "iterable-operator": "^4.0.6",
     "type-fest": "^4.8.3"
-  }
+  },
+  "gitHead": "b38c1848e0d267b8a49b2ffdb623df5361202a14"
 }
