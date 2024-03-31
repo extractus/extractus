@@ -23,6 +23,7 @@
     "@sindresorhus/is": "^5.6.0",
     "@stdlib/assert-is-digit-string": "^0.0.9",
     "@types/sanitize-html": "^2.9.5",
+    "destr": "^2.0.3",
     "extra-utils": "^5.5.2",
     "fastest-levenshtein": "^1.0.16",
     "happy-dom": "^13.3.1",
