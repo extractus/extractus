@@ -5,7 +5,7 @@
     "build": "lerna run build",
     "test": "lerna run test",
     "test:coverage": "lerna run test:coverage",
-    "publish": "lerna publish from-package"
+    "publish": "lerna publish --conventional-commits --no-private"
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^5.0.0",
