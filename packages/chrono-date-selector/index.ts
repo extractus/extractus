@@ -8,6 +8,7 @@ function chronoDateSelector(input: AsyncIterable<string>, context?: ExtractConte
     mapAsync(input, (it) =>
       guessLanguage(it, context)
         .parseDate(it, {
+          // TODO Handle timezone from context?
           timezone: 'GMT'
         })
         ?.getTime()
