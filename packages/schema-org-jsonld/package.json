@@ -19,7 +19,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@extractus/utils": "^0.1.0",
+    "@extractus/utils": "^0.2.0",
     "iterable-operator": "^4.0.6"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "ca84551c36f88b0040f3b37452a90e317b517c00"
 }

@@ -35,5 +35,9 @@
     "esbuild-node-externals": "^1.12.0",
     "esbuild-plugin-polyfill-node": "^0.3.0",
     "esbuild-plugin-wasm": "^1.1.0"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "ca84551c36f88b0040f3b37452a90e317b517c00"
 }

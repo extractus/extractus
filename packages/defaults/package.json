@@ -23,12 +23,16 @@
     "@extractus/opengraph": "^0.1.0",
     "@extractus/schema-org-jsonld": "^0.1.0",
     "@extractus/twitter-card": "^0.1.0",
-    "@extractus/utils": "^0.1.0",
+    "@extractus/utils": "^0.2.0",
     "@stdlib/assert-is-uri": "^0.1.1",
     "condense-whitespace": "^3.0.0",
     "extra-utils": "^5.5.2",
     "is-absolute-url": "^4.0.1",
     "iterable-operator": "^4.0.6",
     "type-fest": "^4.8.3"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "ca84551c36f88b0040f3b37452a90e317b517c00"
 }

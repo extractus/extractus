@@ -104,14 +104,14 @@ importers:
   packages/attribute-selector:
     dependencies:
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
 
   packages/chrono-date-selector:
     dependencies:
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
       chrono-node:
         specifier: ^2.7.5
         version: 2.7.5
@@ -137,8 +137,8 @@ importers:
         specifier: ^0.1.0
         version: link:../twitter-card
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
       '@stdlib/assert-is-uri':
         specifier: ^0.1.1
         version: 0.1.1
@@ -161,10 +161,10 @@ importers:
   packages/extractus:
     dependencies:
       '@extractus/defaults':
-        specifier: link:..\defaults
+        specifier: ^0.1.0
         version: link:../defaults
       '@extractus/utils':
-        specifier: link:..\utils
+        specifier: ^0.2.0
         version: link:../utils
       '@types/object-inspect':
         specifier: ^1.8.4
@@ -207,8 +207,8 @@ importers:
   packages/generic:
     dependencies:
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
       iterable-operator:
         specifier: ^4.0.6
         version: 4.0.6
@@ -216,8 +216,8 @@ importers:
   packages/link-tag:
     dependencies:
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
       iterable-operator:
         specifier: ^4.0.6
         version: 4.0.6
@@ -225,8 +225,8 @@ importers:
   packages/meta-tags:
     dependencies:
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
       iterable-operator:
         specifier: ^4.0.6
         version: 4.0.6
@@ -234,8 +234,8 @@ importers:
   packages/opengraph:
     dependencies:
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
       iterable-operator:
         specifier: ^4.0.6
         version: 4.0.6
@@ -243,8 +243,8 @@ importers:
   packages/schema-org-jsonld:
     dependencies:
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
       iterable-operator:
         specifier: ^4.0.6
         version: 4.0.6
@@ -252,8 +252,8 @@ importers:
   packages/twitter-card:
     dependencies:
       '@extractus/utils':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: link:../utils
 
   packages/utils:
     dependencies:
@@ -856,27 +856,6 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
-
-  /@extractus/utils@0.1.0:
-    resolution: {integrity: sha512-gp4lBbmGTKZTJqrlzHYVam11jtGvoPLDZ/4TKeRD596efU7Cqh/+jHkidUlea+dSjBgtII6a3QaCCuwzjyHjmg==}
-    dependencies:
-      '@jridgewell/resolve-uri': 3.1.1
-      '@minify-html/wasm': 0.11.1
-      '@sindresorhus/is': 5.6.0
-      '@stdlib/assert-is-digit-string': 0.0.9
-      extra-utils: 5.5.2
-      fastest-levenshtein: 1.0.16
-      happy-dom: 13.3.1
-      is-chinese: 2.0.0
-      iterable-operator: 4.0.6
-      linkedom: 0.16.8
-      micro-memoize: 4.1.2
-      mpath: github.com/mongoosejs/mpath/2c9a79bd2b46412ad10549dd74e3cea6a4d9ba98
-      normalize-url: 8.0.0
-      sanitize-html: 2.11.0
-      type-fest: 4.8.3
-      urlpattern-polyfill: 9.0.0
-    dev: false
 
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
