@@ -2,8 +2,9 @@
   "name": "workspace",
   "type": "module",
   "scripts": {
-    "test": "env-cmd -e test ava",
-    "test:coverage": "env-cmd -e test c8 npm test"
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "test:coverage": "lerna run test:coverage"
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^5.0.0",

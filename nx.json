@@ -2,18 +2,36 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
     },
     "test": {
       "cache": true,
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
     },
     "test:coverage": {
       "cache": true,
       "dependsOn": [],
-      "outputs": ["{projectRoot}/coverage"]
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
     }
   },
-  "nxCloudAccessToken": "MTNmOGRhNzYtMjlhNC00YjhiLThhZDItZjIwNGM2ODE3YjY3fHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "MTNmOGRhNzYtMjlhNC00YjhiLThhZDItZjIwNGM2ODE3YjY3fHJlYWQtd3JpdGU=",
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": [],
+    "production": [
+      "default"
+    ]
+  }
 }
