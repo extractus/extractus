@@ -1,6 +1,6 @@
 {
   "name": "@extractus/defaults",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -17,13 +17,13 @@
     }
   },
   "dependencies": {
-    "@extractus/generic": "^0.3.0",
-    "@extractus/link-tag": "^0.3.0",
-    "@extractus/meta-tags": "^0.3.0",
-    "@extractus/opengraph": "^0.3.0",
-    "@extractus/schema-org-jsonld": "^0.3.0",
-    "@extractus/twitter-card": "^0.3.0",
-    "@extractus/utils": "^0.3.0",
+    "@extractus/generic": "^0.4.0",
+    "@extractus/link-tag": "^0.4.0",
+    "@extractus/meta-tags": "^0.4.0",
+    "@extractus/opengraph": "^0.4.0",
+    "@extractus/schema-org-jsonld": "^0.4.0",
+    "@extractus/twitter-card": "^0.4.0",
+    "@extractus/utils": "^0.4.0",
     "@stdlib/assert-is-uri": "^0.1.1",
     "condense-whitespace": "^3.0.0",
     "extra-utils": "^5.5.2",
