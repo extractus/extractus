@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "pkgroll --src .",
     "test": "env-cmd -r ../../.env-cmdrc -e test ava --config ../../ava.config.js",
     "test:coverage": "env-cmd -r ../../.env-cmdrc -e test c8 -c ../../.c8rc.json npm test"
   },
@@ -14,10 +14,15 @@
   "license": "ISC",
   "dependencies": {
     "@extractus/utils": "^0.2.0",
-    "chrono-node": "^2.7.5"
+    "chrono-node": "^2.7.5",
+    "extra-utils": "^5.5.2",
+    "iterable-operator": "^4.0.6"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1ece19acc667d754b6163190ec2a02cc2ede6c04"
+  "gitHead": "1ece19acc667d754b6163190ec2a02cc2ede6c04",
+  "devDependencies": {
+    "dayjs": "^1.11.10"
+  }
 }
