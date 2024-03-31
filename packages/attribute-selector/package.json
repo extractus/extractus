@@ -1,6 +1,6 @@
 {
   "name": "@extractus/attribute-selector",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -19,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@extractus/utils": "^0.2.0"
+    "@extractus/utils": "^0.3.0"
   },
   "publishConfig": {
     "access": "public"
