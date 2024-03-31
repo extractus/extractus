@@ -5,7 +5,13 @@ import { guessLanguage } from './guess-language.js'
 
 function chronoDateSelector(input: AsyncIterable<string>, context?: ExtractContext) {
   return pipeAsync(
-    mapAsync(input, (it) => guessLanguage(it, context).parseDate(it)?.getTime()),
+    mapAsync(input, (it) =>
+      guessLanguage(it, context)
+        .parseDate(it, {
+          timezone: 'GMT'
+        })
+        ?.getTime()
+    ),
     firstAsync
   )
 }
