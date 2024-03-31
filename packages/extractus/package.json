@@ -1,6 +1,6 @@
 {
   "name": "@extractus/extractus",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -19,9 +19,9 @@
   "author": "SettingDust",
   "license": "ISC",
   "dependencies": {
-    "@types/object-inspect": "^1.8.4",
     "@extractus/defaults": "link:..\\defaults",
     "@extractus/utils": "link:..\\utils",
+    "@types/object-inspect": "^1.8.4",
     "chalk": "^5.3.0",
     "extra-utils": "^5.5.2",
     "iterable-operator": "^4.0.6",
