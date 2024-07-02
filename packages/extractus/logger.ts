@@ -50,7 +50,8 @@ export const debug = async <T>(prefix: string, it: T) => {
 }
 
 export const debugNestedIterable = async <
-  T extends NestableRecord<AsyncIterable<Optional<unknown>>>
+  E extends Optional<unknown>,
+  T extends NestableRecord<AsyncIterable<E>>
 >(
   prefix: string,
   it: T
@@ -58,7 +59,7 @@ export const debugNestedIterable = async <
   if (DEBUG) {
     const result = await nestedAsyncIterableToArray(it)
     await debug(prefix, result)
-    return await nestedArrayToAsyncIterable(result)
+    return <T>(<unknown>await nestedArrayToAsyncIterable(result))
   }
   return it
 }

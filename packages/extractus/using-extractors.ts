@@ -1,13 +1,20 @@
-import type { ExtractContext, Extractor, ExtractorReturn, Extractors } from '@extractus/utils'
+import type {
+  ExtractContext,
+  Extractor,
+  ExtractorReturn,
+  Extractors,
+  GetValue
+} from '@extractus/utils'
 import { deepMergeAsync } from '@extractus/utils'
 import { isFunction } from 'extra-utils'
 import { mapAsync } from 'iterable-operator'
+import type { KeysOfUnion } from 'type-fest'
 
 type ApplyExtractorResult<TExtractor extends Extractors> = {
-  [K in keyof TExtractor]: TExtractor[K] extends Extractor
+  [K in KeysOfUnion<TExtractor>]: GetValue<TExtractor, K> extends Extractor
     ? ExtractorReturn
     : {
-        [SK in keyof TExtractor[K]]: ExtractorReturn
+        [SK in KeysOfUnion<GetValue<TExtractor, K>>]: ExtractorReturn
       }
 }
 
@@ -53,11 +60,14 @@ const usingExtractors =
     context: ExtractContext
   ) =>
   async (input: string) => {
-    const result = mapAsync(inputExtractors, async (extractors) =>
+    const result = mapAsync(inputExtractors, (extractors: TExtractor) =>
       applyExtractors(input, extractors, context)
     )
 
-    return await deepMergeAsync(result)
+    const merged = await deepMergeAsync(result)
+
+    // TS2590: Expression produces a union type that is too complex to represent.
+    return <ApplyExtractorResult<TExtractor>>(<unknown>merged)
   }
 
 export default usingExtractors

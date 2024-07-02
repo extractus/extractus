@@ -19,6 +19,13 @@ const usingTransformer =
           }
         | TransformerReturn
     }
+    type UsingTransformerResult = {
+      [K in keyof Input]: Input[K] extends ExtractorReturn
+        ? ExtractorReturn
+        : {
+            [SK in keyof Input[K]]: ExtractorReturn
+          }
+    }
     const result = <Result>{}
 
     for (const path in input) {
@@ -56,15 +63,7 @@ const usingTransformer =
 
       result[path] = <ExtractorReturn>values
     }
-    return <
-      {
-        [K in keyof Input]: Input[K] extends ExtractorReturn
-          ? ExtractorReturn
-          : {
-              [SK in keyof Input[K]]: ExtractorReturn
-            }
-      }
-    >result
+    return <UsingTransformerResult>result
   }
 
 export default usingTransformer

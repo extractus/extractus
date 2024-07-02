@@ -97,7 +97,7 @@ export async function extract<Options extends ExtractOptions<unknown>>(
       (it) => filterUndefined(it),
       (it) => debugNestedIterable('filtered', it),
       usingSelector(actualOptions.selector, context)
-    ),
+  ),
     // pipeAsync max operators is 7
     async (it) => await debug('selected', it)
   )

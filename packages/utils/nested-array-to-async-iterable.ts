@@ -1,44 +1,55 @@
 import { isIterable, toAsyncIterable } from 'iterable-operator'
+import type { KeysOfUnion } from 'type-fest'
+import type { GetValue } from './get-value.js'
 import type { NestableRecord } from './nestable-record.js'
 import type { Optional } from './optional.js'
 
 const nestedArrayToAsyncIterable = async <
-  Input extends NestableRecord<Optional<Array<Optional<unknown>>>>
+  Element extends Optional<unknown>,
+  Input extends NestableRecord<Optional<Element[]>>
 >(
   input: Input
 ) => {
   const result = <
     {
-      [K in keyof Input]:
-        | AsyncIterable<Optional<unknown>>
+      [K in KeysOfUnion<Input>]:
+        | AsyncIterable<Element>
         | {
-            [SK in keyof Input[K]]: AsyncIterable<Optional<unknown>>
+            [SK in KeysOfUnion<GetValue<Input, K>>]: AsyncIterable<Element>
           }
     }
   >{}
   for (const path in input) {
-    const values = input[path]
+    const typedPath = <KeysOfUnion<Input>>(<unknown>path)
+    const values = input[typedPath]
     if (!values) {
       continue
     }
     if (isIterable(values)) {
-      result[path] = toAsyncIterable(values)
+      result[typedPath] = toAsyncIterable<Element>(values)
       continue
     }
     const subResult = <
       {
-        [SK in keyof typeof values]: AsyncIterable<Optional<unknown>>
+        [SK in KeysOfUnion<GetValue<Input, typeof typedPath>>]: AsyncIterable<Element>
       }
     >{}
-    for (const subPath in values) {
-      const subValues = values[subPath]
+    const nestedValues = <
+      {
+        [SK in KeysOfUnion<GetValue<Input, typeof typedPath>>]: Optional<AsyncIterable<Element>>
+      }
+    >values
+    for (const subPath in nestedValues) {
+      const typedSubPath = <KeysOfUnion<GetValue<Input, typeof typedPath>>>(<unknown>subPath)
+      const subValues = <GetValue<GetValue<Input, typeof typedPath>, typeof typedSubPath>>(
+        nestedValues[typedSubPath]!
+      )
       if (!subValues) {
         continue
       }
-      if (isIterable(subValues))
-        subResult[<keyof Input[typeof path]>subPath] = toAsyncIterable(subValues)
+      if (isIterable<Element>(subValues)) subResult[typedSubPath] = toAsyncIterable<Element>(subValues)
     }
-    result[path] = subResult
+    result[typedPath] = subResult
   }
   return <
     {
