@@ -2,10 +2,9 @@
   "name": "@extractus/extractus",
   "version": "0.4.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "pkgroll --src .",
+    "build": "pkgroll --src . --sourcemap",
     "test": "env-cmd -r ../../.env-cmdrc -e test ava --config ../../ava.config.js",
     "test:coverage": "env-cmd -r ../../.env-cmdrc -e test c8 -c ../../.c8rc.json npm test"
   },
@@ -19,8 +18,8 @@
   "author": "SettingDust",
   "license": "ISC",
   "dependencies": {
-    "@extractus/defaults": "^0.4.0",
-    "@extractus/utils": "^0.4.0",
+    "@extractus/defaults": "workspace:^",
+    "@extractus/utils": "workspace:^",
     "@types/object-inspect": "^1.8.4",
     "chalk": "^5.3.0",
     "extra-utils": "^5.5.2",

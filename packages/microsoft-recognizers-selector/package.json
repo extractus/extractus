@@ -2,10 +2,9 @@
   "name": "@extractus/microsoft-recognizers-selector",
   "version": "0.4.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "pkgroll --src .",
+    "build": "pkgroll --src . --sourcemap",
     "test": "env-cmd -r ../../.env-cmdrc -e test ava --config ../../ava.config.js",
     "test:coverage": "env-cmd -r ../../.env-cmdrc -e test c8 -c ../../.c8rc.json npm test"
   },
@@ -19,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@extractus/utils": "^0.4.0",
+    "@extractus/utils": "workspace:^",
     "@microsoft/recognizers-text-date-time": "^1.3.2",
     "dedupe": "^4.0.3",
     "extra-utils": "^5.5.2",
