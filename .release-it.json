@@ -1,0 +1,17 @@
+{
+  "plugins": {
+    "@release-it-plugins/workspaces": {},
+    "release-it-changelogen": {
+      "templates": {
+        "commitMessage": "release: {{newVersion}}",
+        "tagMessage": "{{newVersion}}",
+        "tagBody": "{{newVersion}}"
+      }
+    }
+  },
+  "git": {
+    "tagName": "${version}",
+    "commitMessage": "release: ${version}",
+    "tagAnnotation": "${version}"
+  }
+}
