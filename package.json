@@ -1,14 +1,15 @@
 {
-  "name": "workspace",
+  "name": "@extractus/extractus",
   "type": "module",
+  "private": false,
   "scripts": {
     "build": "pnpm run -r --if-present --parallel build",
     "test": "pnpm run -r --if-present --parallel test",
-    "test:coverage": "pnpm run -r --if-present --parallel test:coverage",
+    "test:coverage": "env-cmd -e test c8 ava",
     "publish": "lerna publish --conventional-commits --no-private"
   },
   "devDependencies": {
-    "@release-it-plugins/workspaces": "^4.2.0",
+    "@changesets/cli": "^2.27.7",
     "@sindresorhus/tsconfig": "^6.0.0",
     "@swc/core": "^1.6.13",
     "@types/node": "~20.14.10",
@@ -31,8 +32,6 @@
     "prettier": "^3.3.2",
     "prettier-eslint": "^16.3.0",
     "prettier-eslint-cli": "^8.0.1",
-    "release-it": "^17.5.0",
-    "release-it-changelogen": "^0.1.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"

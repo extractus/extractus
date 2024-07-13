@@ -1,5 +1,8 @@
 {
     "conventionalCommits.scopes": [
         "deps"
-    ]
+    ],
+    "search.exclude": {
+        "**/node_modules": false
+    }
 }
