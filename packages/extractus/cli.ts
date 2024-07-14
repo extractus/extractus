@@ -17,14 +17,17 @@ const main = defineCommand({
   },
   async run({ args }) {
     let input = args.input
+    let options = {} as Record<string, unknown>
     if (isURLString(args.input)) {
       input = await ofetch(args.input)
+      options['url'] = args.input
+    } else {
+      try {
+        const filepath = path.format(path.parse(input))
+        input = (await fs.readFile(filepath)).toString()
+      } catch (error) {}
     }
-    try {
-      const filepath = path.format(path.parse(input))
-      input = (await fs.readFile(filepath)).toString()
-    } catch (error) {}
-    logger.info(objectInspect(await extract(input), { indent: 2 }))
+    logger.info(objectInspect(await extract(input, options), { indent: 2 }))
   }
 })
 

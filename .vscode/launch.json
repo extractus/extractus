@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "request": "launch",
+            "name": "Extractus CLI",
+            "cwd": "${workspaceFolder}/packages/extractus",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "command": "pnpm tsx --experimental-wasm-modules ./cli.ts https://github.com/SettingDust/changeset-changelogen/pull/3",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        }
+    ]
+}

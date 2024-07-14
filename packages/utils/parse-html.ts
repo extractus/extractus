@@ -1,7 +1,8 @@
-import { pipe } from 'extra-utils'
+import { pipeAsync } from 'extra-utils'
 import type sanitize from 'sanitize-html'
 import memoize from './memoize.js'
 import type { MinifyHtmlOptions } from './minify-html.js'
+import absoluteElements from './absolute-elements.js'
 
 export interface ParseHtmlOptions {
   sanitize?: sanitize.IOptions
@@ -18,7 +19,7 @@ export let defaultOptions: ParseHtmlOptions = {
 export default memoize(
   // @ts-expect-error Options not using, see below
   async (input: string, options: ParseHtmlOptions = defaultOptions) => {
-    const html = pipe(
+    return pipeAsync(
       input,
       // https://github.com/extractus/extractus/issues/8
       // Minify html wasm is 1MB that is too large.
@@ -27,7 +28,15 @@ export default memoize(
       // () => minifyHtml(input, options?.minify),
       // TODO Need write the default options
       // () => sanitizeHtml(input, options?.sanitize)
-      (input) => input
+      async () => {
+        const linkedom = await import('linkedom')
+        const { DOMParser } = linkedom ?? globalThis
+        if (DOMParser) {
+          return <Document>(<unknown>new DOMParser().parseFromString(input, 'text/html'))
+        }
+        throw new Error("Can't find a usable html parser")
+      },
+      (it) => absoluteElements(it)
     )
     // const { Window } = await import('happy-dom')
     // if (Window) {
@@ -35,12 +44,6 @@ export default memoize(
     //   window.document.write(html)
     //   return <Document>(<unknown>window.document)
     // }
-    const linkedom = await import('linkedom')
-    const { DOMParser } = linkedom ?? globalThis
-    if (DOMParser) {
-      return <Document>(<unknown>new DOMParser().parseFromString(html, 'text/html'))
-    }
-    throw new Error("Can't find a usable html parser")
   },
   { maxSize: 2 }
 )

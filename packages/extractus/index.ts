@@ -1,12 +1,13 @@
 import type { DefaultExtracted } from '@extractus/defaults'
 import { extractors, selector, transformer } from '@extractus/defaults'
-import type {
-  DeepMerged,
-  ExtractContext,
-  Extractors,
-  GetValue,
-  Selectors,
-  Transformers
+import {
+  parseHtml,
+  type DeepMerged,
+  type ExtractContext,
+  type Extractors,
+  type GetValue,
+  type Selectors,
+  type Transformers
 } from '@extractus/utils'
 
 import { pipeAsync } from 'extra-utils'
@@ -55,9 +56,10 @@ export async function extract<Options extends ExtractOptions<unknown>>(
     ...options
   }
   await debug('options', actualOptions)
+  const document = await parseHtml(input)
   const context = {
-    url: options?.url,
-    language: options?.language
+    url: options?.url ?? document.URL ?? document.baseURI,
+    language: options?.language ?? document.documentElement.lang
   } satisfies ExtractContext
 
   type OptionsExtractors = Options['extractors']
@@ -97,7 +99,7 @@ export async function extract<Options extends ExtractOptions<unknown>>(
       (it) => filterUndefined(it),
       (it) => debugNestedIterable('filtered', it),
       usingSelector(actualOptions.selector, context)
-  ),
+    ),
     // pipeAsync max operators is 7
     async (it) => await debug('selected', it)
   )
