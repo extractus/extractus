@@ -14,7 +14,13 @@
       "default": "./dist/index.js"
     }
   },
-  "keywords": [],
+  "keywords": [
+    "article",
+    "parser",
+    "webpage",
+    "extractor",
+    "readability"
+  ],
   "author": "SettingDust",
   "license": "ISC",
   "dependencies": {
