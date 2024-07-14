@@ -1,6 +1,6 @@
 {
   "name": "@extractus/extractus",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "",
   "type": "module",
   "scripts": {
@@ -17,7 +17,7 @@
       "default": "./dist/index.js"
     },
     "./cli": {
-      "default":"./dist/cli.js"
+      "default": "./dist/cli.js"
     }
   },
   "keywords": [
