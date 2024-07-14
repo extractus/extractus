@@ -1,5 +1,13 @@
 # @extractus/meta-tags
 
+## 0.4.2
+
+### Patch Changes
+
+- **🏡 Chore:** Bump workspace dependencies [3de7434]
+- **🏡 Chore:** Bump workspace dependencies [17cbe2a]
+  - @extractus/utils@0.5.1
+
 ## 0.4.1
 
 ### Patch Changes
