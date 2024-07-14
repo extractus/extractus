@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
-        "deps"
+        "deps",
+        "changeset"
     ],
     "search.exclude": {
         "**/node_modules": false
