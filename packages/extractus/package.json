@@ -15,6 +15,9 @@
     ".": {
       "types": "./index.ts",
       "default": "./dist/index.js"
+    },
+    "./cli": {
+      "default":"./dist/cli.js"
     }
   },
   "keywords": [
