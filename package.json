@@ -5,7 +5,7 @@
     "build": "pnpm run -r --if-present --parallel build",
     "test": "env-cmd -e test ava",
     "test:coverage": "env-cmd -e test c8 ava",
-    "publish": "lerna publish --conventional-commits --no-private"
+    "version": "changeset-changelogen"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
