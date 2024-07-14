@@ -41,8 +41,8 @@ importers:
         specifier: ^10.1.2
         version: 10.1.2
       changeset-changelogen:
-        specifier: ^0.3.2
-        version: 0.3.2
+        specifier: ^0.3.3
+        version: 0.3.3
       changesets:
         specifier: ^1.0.2
         version: 1.0.2
@@ -1807,7 +1807,6 @@ packages:
 
   bun@1.1.20:
     resolution: {integrity: sha512-aqLmvaz0/vLUiCrOXtAsf7pCSOS/qXieYDsq8COa3+fIgMK05CjZt9m9r7DC+tjKy7hH8uKSNTapQOr/kX8gIA==}
-    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -1880,8 +1879,8 @@ packages:
     resolution: {integrity: sha512-IzgToIJ/R9NhVKmL+PW33ozYkv53bXvufDNUSH3GTKXq1iCHGgkbgbtqEWbo8tnWNnt7nPDpjL8PwSG2iS8RVw==}
     hasBin: true
 
-  changeset-changelogen@0.3.2:
-    resolution: {integrity: sha512-LCGWQXG6CubgdW32owcm96nqFtbLKT4a6QCXU7YiSXtmmiYXEx6kdvCSKs3QgdkLPhPS65S+Piqb7mJj49zHyg==}
+  changeset-changelogen@0.3.3:
+    resolution: {integrity: sha512-MOr+71tt5TZSYRqakDPj+J5fHv5HvPFM2FzULkk4/EVjWQrdLpAwQymJwFCPVFs20kb/8JL4PfoOrTqUAnicpg==}
     hasBin: true
 
   changesets@1.0.2:
@@ -5666,7 +5665,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  changeset-changelogen@0.3.2:
+  changeset-changelogen@0.3.3:
     dependencies:
       '@changesets/read': 0.6.0
       '@changesets/types': 6.0.0
