@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm run -r --if-present --parallel build",
-    "test": "pnpm run -r --if-present --parallel test",
+    "test": "env-cmd -e test ava",
     "test:coverage": "env-cmd -e test c8 ava",
     "publish": "lerna publish --conventional-commits --no-private"
   },
