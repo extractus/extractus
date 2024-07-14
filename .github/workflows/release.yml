@@ -38,8 +38,8 @@ jobs:
         with:
           title: 'chore: version package'
           commit: 'chore: version package'
-          version: changeset version && pnpm install --lockfile-only
-          publish: changeset publish
+          version: pnpm changeset version && pnpm install --lockfile-only
+          publish: pnpm changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
