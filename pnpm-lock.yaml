@@ -40,6 +40,9 @@ importers:
       c8:
         specifier: ^10.1.2
         version: 10.1.2
+      changeset:
+        specifier: ^0.2.6
+        version: 0.2.6
       changeset-changelogen:
         specifier: ^0.3.0
         version: 0.3.0
@@ -1787,6 +1790,9 @@ packages:
   changeset-changelogen@0.3.0:
     resolution: {integrity: sha512-Exw8BYfeqaz4A3ukFLlrTZ7pwT3pRbLay/YM4utnjucNEljIJYihKJDLgDELx3OX8i5nCNtAfzjDw2jUa0vJnA==}
     hasBin: true
+
+  changeset@0.2.6:
+    resolution: {integrity: sha512-d21ym9zLPOKMVhIa8ulJo5IV3QR2NNdK6BWuwg48qJA0XSQaMeDjo1UGThcTn7YDmU08j3UpKyFNvb3zplk8mw==}
 
   chardet@0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
@@ -3860,6 +3866,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  udc@1.0.1:
+    resolution: {integrity: sha512-jv+D9de1flsum5QkFtBdjyppCQAdz9kTck/0xST5Vx48T9LL2BYnw0Iw77dSKDQ9KZ/PS3qPO1vfXHDpLZlxcQ==}
+
   ufo@1.5.3:
     resolution: {integrity: sha512-Y7HYmWaFwPUmkoQCUIAYpKqkOf+SbVj/2fJJZ4RJMCfZp0rTGwRbzQD+HghfnhKOjL9E01okqz+ncJskGYfBNw==}
 
@@ -3868,6 +3877,9 @@ packages:
 
   unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
+
+  underscore@1.13.6:
+    resolution: {integrity: sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==}
 
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
@@ -5516,6 +5528,11 @@ snapshots:
       tsx: 4.16.2
     transitivePeerDependencies:
       - magicast
+
+  changeset@0.2.6:
+    dependencies:
+      udc: 1.0.1
+      underscore: 1.13.6
 
   chardet@0.7.0: {}
 
@@ -7790,6 +7807,8 @@ snapshots:
 
   typescript@5.5.3: {}
 
+  udc@1.0.1: {}
+
   ufo@1.5.3: {}
 
   uhyphen@0.2.0: {}
@@ -7800,6 +7819,8 @@ snapshots:
       has-bigints: 1.0.2
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
+
+  underscore@1.13.6: {}
 
   undici-types@5.26.5: {}
 
