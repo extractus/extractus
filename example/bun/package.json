@@ -1,0 +1,19 @@
+{
+  "name": "@exactus/examples-bun",
+  "private": "true",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "bun index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bun": "^1.1.20"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.6",
+    "bun-types": "^1.1.20"
+  }
+}
