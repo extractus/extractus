@@ -13,8 +13,8 @@ importers:
   .:
     dependencies:
       '@swc/helpers':
-        specifier: ~0.5.11
-        version: 0.5.11
+        specifier: ~0.5.12
+        version: 0.5.12
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.7
@@ -24,7 +24,7 @@ importers:
         version: 6.0.0
       '@swc/core':
         specifier: ^1.6.13
-        version: 1.6.13(@swc/helpers@0.5.11)
+        version: 1.6.13(@swc/helpers@0.5.12)
       '@types/node':
         specifier: ~20.14.10
         version: 20.14.10
@@ -41,8 +41,8 @@ importers:
         specifier: ^10.1.2
         version: 10.1.2
       changeset-changelogen:
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.3.1
+        version: 0.3.1
       changesets:
         specifier: ^1.0.2
         version: 1.0.2
@@ -83,8 +83,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(typescript@5.5.3)
       prettier:
-        specifier: ^3.3.2
-        version: 3.3.2
+        specifier: ^3.3.3
+        version: 3.3.3
       prettier-eslint:
         specifier: ^16.3.0
         version: 16.3.0
@@ -93,7 +93,7 @@ importers:
         version: 8.0.1(prettier-eslint@16.3.0)
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@swc/core@1.6.13(@swc/helpers@0.5.11))(@types/node@20.14.10)(typescript@5.5.3)
+        version: 10.9.2(@swc/core@1.6.13(@swc/helpers@0.5.12))(@types/node@20.14.10)(typescript@5.5.3)
       tsx:
         specifier: ^4.16.2
         version: 4.16.2
@@ -1341,8 +1341,8 @@ packages:
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
 
-  '@swc/helpers@0.5.11':
-    resolution: {integrity: sha512-YNlnKRWF2sVojTpIyzwou9XoTNbzbzONwRhOoniEioF1AtaitTvVZblaQRrAzChWQ1bLYyYSWzM18y4WwgzJ+A==}
+  '@swc/helpers@0.5.12':
+    resolution: {integrity: sha512-KMZNXiGibsW9kvZAO1Pam2JPTDBm+KSHMMHWdsyI/1DbIZjT2A6Gy3hblVXUMEDvUAKq+e0vL0X0o54owWji7g==}
 
   '@swc/types@0.1.9':
     resolution: {integrity: sha512-qKnCno++jzcJ4lM4NTfYifm1EFSCeIfKiAHAfkENZAV5Kl9PjJIyd2yeeVv6c/2CckuLyv2NmRC5pv6pm2WQBg==}
@@ -1787,8 +1787,8 @@ packages:
     resolution: {integrity: sha512-IzgToIJ/R9NhVKmL+PW33ozYkv53bXvufDNUSH3GTKXq1iCHGgkbgbtqEWbo8tnWNnt7nPDpjL8PwSG2iS8RVw==}
     hasBin: true
 
-  changeset-changelogen@0.3.0:
-    resolution: {integrity: sha512-Exw8BYfeqaz4A3ukFLlrTZ7pwT3pRbLay/YM4utnjucNEljIJYihKJDLgDELx3OX8i5nCNtAfzjDw2jUa0vJnA==}
+  changeset-changelogen@0.3.1:
+    resolution: {integrity: sha512-PSrSmR3e8gV0vjGYoL+QDXK3sFpGgBH+tj3LfMKY/zttkchz8gNMYghhcEq/hDJZCCJZxjuRmFGxONkksFSSgw==}
     hasBin: true
 
   changesets@1.0.2:
@@ -3405,8 +3405,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.3.2:
-    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -4936,7 +4936,7 @@ snapshots:
   '@swc/core-win32-x64-msvc@1.6.13':
     optional: true
 
-  '@swc/core@1.6.13(@swc/helpers@0.5.11)':
+  '@swc/core@1.6.13(@swc/helpers@0.5.12)':
     dependencies:
       '@swc/counter': 0.1.3
       '@swc/types': 0.1.9
@@ -4951,11 +4951,11 @@ snapshots:
       '@swc/core-win32-arm64-msvc': 1.6.13
       '@swc/core-win32-ia32-msvc': 1.6.13
       '@swc/core-win32-x64-msvc': 1.6.13
-      '@swc/helpers': 0.5.11
+      '@swc/helpers': 0.5.12
 
   '@swc/counter@0.1.3': {}
 
-  '@swc/helpers@0.5.11':
+  '@swc/helpers@0.5.12':
     dependencies:
       tslib: 2.6.3
 
@@ -5510,7 +5510,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  changeset-changelogen@0.3.0:
+  changeset-changelogen@0.3.1:
     dependencies:
       '@changesets/read': 0.6.0
       '@changesets/types': 6.0.0
@@ -7309,7 +7309,7 @@ snapshots:
       indent-string: 4.0.0
       lodash.merge: 4.6.2
       loglevel-colored-level-prefix: 1.0.0
-      prettier: 3.3.2
+      prettier: 3.3.3
       pretty-format: 29.7.0
       require-relative: 0.8.7
       typescript: 5.5.3
@@ -7319,7 +7319,7 @@ snapshots:
 
   prettier@2.8.8: {}
 
-  prettier@3.3.2: {}
+  prettier@3.3.3: {}
 
   pretty-format@29.7.0:
     dependencies:
@@ -7705,7 +7705,7 @@ snapshots:
     dependencies:
       typescript: 5.5.3
 
-  ts-node@10.9.2(@swc/core@1.6.13(@swc/helpers@0.5.11))(@types/node@20.14.10)(typescript@5.5.3):
+  ts-node@10.9.2(@swc/core@1.6.13(@swc/helpers@0.5.12))(@types/node@20.14.10)(typescript@5.5.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
@@ -7723,7 +7723,7 @@ snapshots:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     optionalDependencies:
-      '@swc/core': 1.6.13(@swc/helpers@0.5.11)
+      '@swc/core': 1.6.13(@swc/helpers@0.5.12)
 
   tsconfig-paths@3.15.0:
     dependencies:
