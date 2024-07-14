@@ -4,6 +4,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  postcss@<8.4.31: '>=8.4.31'
+  semver@>=6.0.0 <6.3.1: '>=6.3.1'
+
 importers:
 
   .:
@@ -97,7 +101,7 @@ importers:
         specifier: ^5.5.3
         version: 5.5.3
 
-  example/bun:
+  examples/bun:
     dependencies:
       bun:
         specifier: ^1.1.20
@@ -109,6 +113,12 @@ importers:
       bun-types:
         specifier: ^1.1.20
         version: 1.1.20
+
+  examples/deno:
+    dependencies:
+      deno-bin:
+        specifier: ^1.45.2
+        version: 1.45.2
 
   packages/attribute-selector:
     dependencies:
@@ -1607,6 +1617,10 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
+  adm-zip@0.5.14:
+    resolution: {integrity: sha512-DnyqqifT4Jrcvb8USYjp6FHtBpEIz1mnXu6pTRHZ0RL69LbQYiO+0lDFg5+OKA7U29oWSs3a/i8fhn8ZcceIWg==}
+    engines: {node: '>=12.0'}
+
   agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
@@ -2093,6 +2107,10 @@ packages:
 
   delegates@1.0.0:
     resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==}
+
+  deno-bin@1.45.2:
+    resolution: {integrity: sha512-Ni6kx785E+Hg4/yUyrXK9Y8RRkUXlI3FDpYU+91hKXbLz26P9/Olb8qoQ21PYtOUuEd1/fQed4mndNL5vDVenw==}
+    hasBin: true
 
   destr@2.0.3:
     resolution: {integrity: sha512-2N3BOUU4gYMpTP24s5rF5iP7BDr7uNTCs4ozw3kf/eKfvWSIu93GEBi5m427YoyJoeOzQ5smuu4nNAPGb8idSQ==}
@@ -5311,6 +5329,8 @@ snapshots:
 
   acorn@8.12.1: {}
 
+  adm-zip@0.5.14: {}
+
   agent-base@6.0.2:
     dependencies:
       debug: 4.3.5
@@ -5870,6 +5890,10 @@ snapshots:
   defu@6.1.4: {}
 
   delegates@1.0.0: {}
+
+  deno-bin@1.45.2:
+    dependencies:
+      adm-zip: 0.5.14
 
   destr@2.0.3: {}
 
