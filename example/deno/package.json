@@ -1,0 +1,14 @@
+{
+  "name": "@exactus/examples-deno",
+  "private": "true",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "deno test index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "deno-bin": "^1.45.2"
+  }
+}
