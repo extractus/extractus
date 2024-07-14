@@ -3,7 +3,7 @@
   "private": "true",
   "version": "0.1.0",
   "scripts": {
-    "test": "deno test index.ts"
+    "test": "deno test index.ts --allow-read"
   },
   "keywords": [],
   "author": "",
