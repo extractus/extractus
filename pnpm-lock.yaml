@@ -4,10 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  postcss@<8.4.31: '>=8.4.31'
-  semver@>=6.0.0 <6.3.1: '>=6.3.1'
-
 importers:
 
   .:
@@ -100,6 +96,19 @@ importers:
       typescript:
         specifier: ^5.5.3
         version: 5.5.3
+
+  example/bun:
+    dependencies:
+      bun:
+        specifier: ^1.1.20
+        version: 1.1.20
+    devDependencies:
+      '@types/bun':
+        specifier: ^1.1.6
+        version: 1.1.6
+      bun-types:
+        specifier: ^1.1.20
+        version: 1.1.20
 
   packages/attribute-selector:
     dependencies:
@@ -862,6 +871,46 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
+  '@oven/bun-darwin-aarch64@1.1.20':
+    resolution: {integrity: sha512-9dZuhfkol/fgG9+ZcDfDFKamp6npraPQghutE5IJM8Y3w4+y5USvw+NbANuKLSLFOH06oXMT/necZ9HT0rzTlg==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@oven/bun-darwin-x64-baseline@1.1.20':
+    resolution: {integrity: sha512-9H0nNs0clDXtIAntN0u4++zsspCabLe2PIXfcPamw4D5qBZEVve0jd3+6pg6mTm3z2aGkUAlPtonPvlzNeWiQg==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oven/bun-darwin-x64@1.1.20':
+    resolution: {integrity: sha512-6IfCEMt6/exOyiAik3dbFAcP0BxDquGSq4CH9iVvd7kAI1/5X0O/iRKuFNyT9HJb16jSLISh05nZGW6KBUKXuA==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oven/bun-linux-aarch64@1.1.20':
+    resolution: {integrity: sha512-xR2Wf9VqFZ2IiRBv9pvQ8z/DihfIA64bGbMkLkrAhZJACk+HBJ8eLjEGI4hvr9SM9br4Jtfjlm6CmNlkpqbk3Q==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oven/bun-linux-x64-baseline@1.1.20':
+    resolution: {integrity: sha512-H1PIzW+Dv6VNNH/yS6we7YD2Hvig3s6zLYnEt+mQok+wJKtjzpjQT1qZly/r6mhkZqHIcM3mRAwXcxgXF7yv7Q==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oven/bun-linux-x64@1.1.20':
+    resolution: {integrity: sha512-8TWvnsWWWX9pZoYZ1GwZX3UwkfsnZYzicxwUdZVf/S0sNM6FBWkC9YqidxUsPva4DLKIi4oON8Ra5DpDwRZWSw==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oven/bun-windows-x64-baseline@1.1.20':
+    resolution: {integrity: sha512-yFm6jhL7SPfPz7sOukUeiAGmX7/S+6yj3cY8NxGGvBaZZLqNSw+vitAFg/ssV8v8oDAG7b1SqP5KzEZt3EUvKg==}
+    cpu: [x64]
+    os: [win32]
+
+  '@oven/bun-windows-x64@1.1.20':
+    resolution: {integrity: sha512-1Njpp2LUq6mEyDdk3IBge7ew/+maqX/Q7ltalX7JT2Gxh693c0KuL7pzrExbkBweqSL1nMec0Crw+GkVd3bFxA==}
+    cpu: [x64]
+    os: [win32]
+
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -1368,6 +1417,9 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
+  '@types/bun@1.1.6':
+    resolution: {integrity: sha512-uJgKjTdX0GkWEHZzQzFsJkWp5+43ZS7HC8sZPFnOwnSo1AsNl2q9o2bFeS23disNDqbggEgyFkKCHl/w8iZsMA==}
+
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
@@ -1379,6 +1431,9 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
+
+  '@types/node@20.12.14':
+    resolution: {integrity: sha512-scnD59RpYD91xngrQQLGkE+6UrHUPzeKZWhhjBSa3HSkwjbQc38+q3RoIVEwxQGRw3M+j5hpNAM+lgV3cVormg==}
 
   '@types/node@20.14.10':
     resolution: {integrity: sha512-MdiXf+nDuMvY0gJKxyfZ7/6UFsETO7mGKF54MVD/ekJS6HdFtpZFBgrh6Pseu64XTb2MLyFPlbW6hj8HYRQNOQ==}
@@ -1397,6 +1452,9 @@ packages:
 
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
+
+  '@types/ws@8.5.11':
+    resolution: {integrity: sha512-4+q7P5h3SpJxaBft0Dzpbr6lmMaqh0Jr2tbhJZ/luAwvD7ohSCniYkwz/pLxuT2h0EOa6QADgJj1Ko+TzRfZ+w==}
 
   '@typescript-eslint/eslint-plugin@7.16.0':
     resolution: {integrity: sha512-py1miT6iQpJcs1BiJjm54AMzeuMPBSPuKPlnT8HlfudbcS5rYeX5jajpLf3mrdRh9dA/Ec2FVUY0ifeVNDIhZw==}
@@ -1726,6 +1784,18 @@ packages:
   builtin-modules@3.3.0:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
+
+  bun-types@1.1.17:
+    resolution: {integrity: sha512-Z4+OplcSd/YZq7ZsrfD00DKJeCwuNY96a1IDJyR73+cTBaFIS7SC6LhpY/W3AMEXO9iYq5NJ58WAwnwL1p5vKg==}
+
+  bun-types@1.1.20:
+    resolution: {integrity: sha512-2u84HciDR3E7Uc0t0AEeXHmQAWe9uzRKTz120D3silIJOQlbGIMJMJiGaM8Yx7nEvMyfV0LfSdkEGnb77AN5AA==}
+
+  bun@1.1.20:
+    resolution: {integrity: sha512-aqLmvaz0/vLUiCrOXtAsf7pCSOS/qXieYDsq8COa3+fIgMK05CjZt9m9r7DC+tjKy7hH8uKSNTapQOr/kX8gIA==}
+    cpu: [arm64, x64]
+    os: [darwin, linux, win32]
+    hasBin: true
 
   bundle-name@3.0.0:
     resolution: {integrity: sha512-PKA4BeSvBpQKQ8iPOGCSiell+N8P+Tf1DlwqmYhpe2gAhKPHn8EYOxVT+ShuGmhg8lN8XiSlS80yiExKXrURlw==}
@@ -4575,6 +4645,30 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
+  '@oven/bun-darwin-aarch64@1.1.20':
+    optional: true
+
+  '@oven/bun-darwin-x64-baseline@1.1.20':
+    optional: true
+
+  '@oven/bun-darwin-x64@1.1.20':
+    optional: true
+
+  '@oven/bun-linux-aarch64@1.1.20':
+    optional: true
+
+  '@oven/bun-linux-x64-baseline@1.1.20':
+    optional: true
+
+  '@oven/bun-linux-x64@1.1.20':
+    optional: true
+
+  '@oven/bun-windows-x64-baseline@1.1.20':
+    optional: true
+
+  '@oven/bun-windows-x64@1.1.20':
+    optional: true
+
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
@@ -4980,6 +5074,10 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
+  '@types/bun@1.1.6':
+    dependencies:
+      bun-types: 1.1.17
+
   '@types/estree@1.0.5': {}
 
   '@types/istanbul-lib-coverage@2.0.6': {}
@@ -4987,6 +5085,10 @@ snapshots:
   '@types/json5@0.0.29': {}
 
   '@types/node@12.20.55': {}
+
+  '@types/node@20.12.14':
+    dependencies:
+      undici-types: 5.26.5
 
   '@types/node@20.14.10':
     dependencies:
@@ -5003,6 +5105,10 @@ snapshots:
       htmlparser2: 8.0.2
 
   '@types/semver@7.5.8': {}
+
+  '@types/ws@8.5.11':
+    dependencies:
+      '@types/node': 20.14.10
 
   '@typescript-eslint/eslint-plugin@7.16.0(@typescript-eslint/parser@7.16.0(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0)(typescript@5.5.3)':
     dependencies:
@@ -5417,6 +5523,27 @@ snapshots:
       update-browserslist-db: 1.0.16(browserslist@4.23.1)
 
   builtin-modules@3.3.0: {}
+
+  bun-types@1.1.17:
+    dependencies:
+      '@types/node': 20.12.14
+      '@types/ws': 8.5.11
+
+  bun-types@1.1.20:
+    dependencies:
+      '@types/node': 20.12.14
+      '@types/ws': 8.5.11
+
+  bun@1.1.20:
+    optionalDependencies:
+      '@oven/bun-darwin-aarch64': 1.1.20
+      '@oven/bun-darwin-x64': 1.1.20
+      '@oven/bun-darwin-x64-baseline': 1.1.20
+      '@oven/bun-linux-aarch64': 1.1.20
+      '@oven/bun-linux-x64': 1.1.20
+      '@oven/bun-linux-x64-baseline': 1.1.20
+      '@oven/bun-windows-x64': 1.1.20
+      '@oven/bun-windows-x64-baseline': 1.1.20
 
   bundle-name@3.0.0:
     dependencies:
