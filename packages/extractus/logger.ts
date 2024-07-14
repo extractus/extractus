@@ -14,6 +14,7 @@ const colors = {
   WARN: chalk.yellow,
   ERROR: chalk.red
 }
+
 logPrefix.reg(log)
 log.enableAll()
 
